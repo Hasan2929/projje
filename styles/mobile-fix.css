@@ -1,0 +1,161 @@
+/* Mobile Fix CSS - تحسينات التوافق مع الموبايل */
+
+/* منع التمرير الأفقي في جميع العناصر */
+* {
+    max-width: 100%;
+}
+
+body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+.main-content {
+    padding-top: var(--header-height);
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* إظهار زر القائمة الجانبية في الموبايل */
+@media (max-width: 992px) {
+    .sidebar-toggle {
+        display: flex !important;
+        background: var(--primary-color);
+        border: none;
+        border-radius: 50%;
+        width: 3rem;
+        height: 3rem;
+        color: white;
+        font-size: 1.25rem;
+        cursor: pointer;
+        z-index: 1000;
+        transition: var(--transition);
+        box-shadow: var(--shadow-lg);
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sidebar-toggle:hover {
+        background: var(--primary-dark);
+        transform: scale(1.1);
+    }
+
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background: rgba(15, 15, 35, 0.98);
+        backdrop-filter: blur(10px);
+    }
+
+    .header-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.75rem 0;
+        flex-wrap: nowrap;
+        width: 100%;
+    }
+
+    /* إخفاء عناصر الشريط العلوي غير الضرورية في الموبايل */
+    .header .nav,
+    .header-actions-left,
+    #search-wrapper {
+        display: none !important;
+    }
+
+    /* إظهار زر القائمة الجانبية */
+    .menu-toggle {
+        display: flex !important;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        flex-shrink: 0;
+    }
+
+    .logo i {
+        font-size: 1.5rem;
+    }
+
+    .main-content {
+        margin-top: var(--header-height);
+        width: 100%;
+        overflow-x: hidden;
+    }
+}
+
+/* تعديل البطاقات في الموبايل */
+@media (max-width: 768px) {
+    .programs-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    .card {
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+    }
+
+    .card2 {
+        width: 100%;
+        height: 100%;
+    }
+
+    .card-title {
+        font-size: 0.9rem;
+        min-height: 2.4em;
+    }
+
+    .card-meta {
+        font-size: 0.8rem;
+    }
+
+    .card-image {
+        height: 120px;
+    }
+}
+
+/* تقليل المسافات بعد السلايدر */
+.featured-slider {
+    height: 50vh;
+    min-height: 300px;
+}
+
+.hero {
+    padding-top: 2rem;
+    padding-bottom: 1.5rem;
+}
+
+/* منع التمرير الأفقي في الشاشات الصغيرة جداً */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 0.5rem;
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    .programs-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+    }
+
+    .card-title {
+        font-size: 0.8rem;
+    }
+
+    .card-meta {
+        font-size: 0.7rem;
+    }
+}

@@ -1,0 +1,7 @@
+# منع تنفيذ أي ملفات php داخل uploads
+<FilesMatch "\.(php|phtml|php3|php4|phps)$">
+  Deny from all
+</FilesMatch>
+
+# منع عرض قائمة المجلد
+Options -Indexes

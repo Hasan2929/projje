@@ -1,0 +1,131 @@
+/* ========================================================== */
+/* === التصميم الجديد والاحترافي لصفحة "تواصل معنا" (V2) === */
+/* ========================================================== */
+
+:root {
+    /* تعريف الألوان المتدرجة لتسهيل الاستخدام */
+    --primary-color-rgb: 123, 77, 255;
+    --secondary-color-rgb: 76, 172, 236;
+}
+
+.contact-hero {
+    padding: 4rem 0;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.1), rgba(var(--secondary-color-rgb), 0.1)), var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.contact-hero h1 { font-size: 2.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+.contact-hero p { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+
+.contact-section { padding: 4rem 0; }
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 3rem;
+    align-items: flex-start;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.info-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    text-align: center;
+    transition: var(--transition);
+}
+.info-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.info-icon {
+    width: 60px; height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    color: white;
+    font-size: 1.8rem;
+}
+
+.info-card h3 { font-size: 1.25rem; margin: 0 0 0.5rem 0; color: var(--text-primary); }
+.info-card p { color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem; }
+.info-card a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+.info-card a:hover { color: var(--text-primary); }
+
+.social-links-contact { display: flex; justify-content: center; gap: 1rem; }
+.social-links-contact a {
+    width: 40px; height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-card);
+    border-radius: 50%;
+    color: var(--text-secondary);
+    transition: var(--transition);
+}
+.social-links-contact a:hover { background: var(--primary-color); color: white; transform: scale(1.1); }
+
+.contact-form-container {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+}
+.contact-form-container h2 { font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+.contact-form-container p { color: var(--text-secondary); margin-bottom: 2rem; }
+
+.contact-form .form-group { margin-bottom: 1.5rem; }
+.contact-form label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-secondary); }
+.contact-form input, .contact-form textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: var(--transition);
+    box-sizing: border-box; /* يمنع الحقول من الخروج عن الإطار */
+}
+.contact-form input:focus, .contact-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-light);
+}
+.contact-form textarea { resize: vertical; }
+
+.submit-btn {
+    width: 100%;
+    padding: 0.9rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+}
+.submit-btn:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+/* --- التصميم المتجاوب --- */
+@media(max-width: 992px) {
+    .contact-grid { grid-template-columns: 1fr; }
+}

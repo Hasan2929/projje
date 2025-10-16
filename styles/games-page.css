@@ -1,0 +1,199 @@
+/* ========================================================== */
+/* ===      ملف التصميم الحصري لصفحة الألعاب (مضمون)       === */
+/* ========================================================== */
+
+/* --- الحاوية الرئيسية للصفحة --- */
+/* --- الحاوية الرئيسية للصفحة (بكامل العرض) --- */
+.page-wrapper.container {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 2.5rem; /* زيادة المسافة قليلاً بين القائمة والمحتوى */
+    
+    /* === الإصلاح الحاسم هنا === */
+    max-width: 100%; /* اجعل الحاوية تأخذ كامل العرض */
+    padding: 0 2rem;   /* إضافة مسافة داخلية أنيقة من الحواف */
+
+    align-items: flex-start;
+}
+
+/* --- القائمة الجانبية وتصميمها --- */
+.filters-sidebar {
+    width: 250px;
+    flex-shrink: 0;
+    position: sticky;
+    top: calc(var(--header-height) + 2rem);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+}
+
+/* --- المحتوى الرئيسي --- */
+.main-content-grid {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+/* --- تصميم عنوان الفلاتر --- */
+.filters-title {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    margin: 0 0 1rem 0;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    font-weight: 700;
+}
+
+/* --- تصميم قائمة الفلاتر --- */
+.genre-filters-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* --- تصميم أزرار الفلاتر --- */
+.genre-filter-btn {
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    padding: 0.8rem 1rem;
+    text-align: right;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+.genre-filter-btn:hover {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    border-color: var(--border-light);
+}
+.genre-filter-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
+}
+
+/* --- تصميم متجاوب للموبايل --- */
+@media (max-width: 992px) {
+    .page-wrapper.container {
+        flex-direction: column;
+    }
+    .filters-sidebar {
+        width: 100%;
+        position: static;
+        margin-bottom: 2rem;
+    }
+}
+
+
+/* ========================================================== */
+/* ===    التصميم الجديد لفلاتر الموبايل (نافذة منبثقة)    === */
+/* ========================================================== */
+
+/* --- إخفاء زر الموبايل على شاشات الكمبيوتر --- */
+.mobile-filter-trigger {
+    display: none;
+}
+
+.page-header {
+    display: flex; /* <-- هذا يبقى كما هو */
+    justify-content: space-between; /* <-- هذا يبقى كما هو */
+    align-items: center; /* <-- هذا يبقى كما هو */
+    margin-bottom: 1.5rem; /* زيادة المسافة قليلاً */
+}
+
+/* جعل العنوان يأخذ المساحة المتاحة */
+.page-header .section-title {
+    margin: 0; /* إلغاء الهوامش الافتراضية للعنوان */
+}
+
+/* --- تصميم النافذة المنبثقة (مخفية افتراضياً) --- */
+.filter-modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(5px);
+    z-index: 3000;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* تظهر من الأسفل */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.filter-modal-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.filter-modal-content {
+    background: var(--bg-secondary);
+    width: 100%;
+    max-width: 500px;
+    border-radius: 20px 20px 0 0;
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.2);
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.filter-modal-overlay.open .filter-modal-content {
+    transform: translateY(0);
+}
+
+.filter-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.filter-modal-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+.close-filter-modal {
+    background: none; border: none; font-size: 2rem;
+    color: var(--text-secondary); cursor: pointer;
+}
+
+.filter-modal-body {
+    padding: 1.5rem;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+.filter-modal-body .genre-filters-list {
+    /* (سيستخدم نفس تصميم القائمة الجانبية) */
+}
+
+
+/* --- تفعيل التصميم عند عرض الموبايل --- */
+@media (max-width: 992px) {
+    /* إخفاء القائمة الجانبية للكمبيوتر */
+    .filters-sidebar {
+        display: none;
+    }
+
+    /* إظهار زر الفلترة للموبايل */
+    .mobile-filter-trigger {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        color: var(--text-secondary);
+        padding: 0.6rem 1rem;
+        border-radius: var(--radius-md);
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+    }
+}

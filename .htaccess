@@ -1,0 +1,28 @@
+# Turn on URL rewriting
+RewriteEngine On
+
+# Redirect HTTP to HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Basic security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# ====> هذا هو الجزء المصحح والأهم <====
+# Handle PHP files using the correct handler
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php81 .php
+</IfModule>
+
+# Prevent directory listing
+Options -Indexes
+
+# ====> Force Download for APK and IPA Files <====
+<FilesMatch "\.(ipa|apk)$">
+  ForceType application/octet-stream
+  Header set Content-Disposition attachment
+</FilesMatch>

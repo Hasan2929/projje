@@ -1,0 +1,5 @@
+# This rule targets all HTML pages on your site
+/*.html
+  # This header tells browsers and Netlify's CDN:
+  # "Do not use a cached version. Always check if there's a new one."
+  Cache-Control: public, max-age=0, must-revalidate

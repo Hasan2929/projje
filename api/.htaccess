@@ -1,0 +1,5 @@
+# يمنع الزوار من رؤية قائمة بملفات المجلد
+Options -Indexes
+
+# يخبر الخادم أن يبحث عن index.php كصفحة رئيسية
+DirectoryIndex index.php

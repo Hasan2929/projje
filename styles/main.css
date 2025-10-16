@@ -1,0 +1,4319 @@
+/* Reset and Base Styles */
+@font-face {
+    font-family: 'KurdinFont';
+    /* تأكد من صحة هذا المسار! */
+src: url('../fonts/NRT-Reg.ttf') format('truetype');    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+
+
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #6366f1;
+        --primary-color-rgb: 99, 102, 241; /* <-- أضف هذا */
+
+    --primary-dark: #4f46e5;
+    --secondary-color: #8b5cf6;
+    --accent-color: #06b6d4;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --error-color: #ef4444;
+
+    --header-height: 65px;
+    
+    --bg-primary: #0f0f23;
+    --bg-secondary: #1a1a2e;
+    --bg-tertiary: #16213e;
+    --bg-card: #1e1e3f;
+    
+    --text-primary: #ffffff;
+    --text-secondary: #a1a1aa;
+    --text-muted: #71717a;
+    
+    --border-color: #27272a;
+    --border-light: #3f3f46;
+    
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.15s ease-out;
+}
+
+
+ /* ألوان الوضع الفاتح */
+    body.light-mode {
+        --bg-primary: #f1f5f9; /* رمادي فاتح جداً */
+        --bg-secondary: #ffffff; /* أبيض */
+        --bg-tertiary: #f8fafc;
+        --bg-card: #ffffff;
+        
+        --text-primary: #1e293b; /* أسود غامق */
+        --text-secondary: #64748b; /* رمادي متوسط */
+
+        --border-color: #e2e8f0; /* رمادي فاتح للحدود */
+    }
+
+    /* تأثير الانتقال السلس **لكل شيء** في الموقع */
+    * {
+        transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+    }
+
+body {
+   font-family: 'KurdinFont', 'Cairo', sans-serif; 
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Header Styles */
+.header {
+    /* إعطاء خلفية صلبة للهيدر */
+    background: var(--bg-primary); 
+    border-bottom: 1px solid var(--border-color);
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    transition: var(--transition);
+}
+/* لم نعد بحاجة لكلاس .scrolled */
+
+.header-content {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr; /* يسار، وسط، يمين */
+    align-items: center;
+    height: var(--header-height);
+    gap: 1rem;
+}
+
+/* القائمة على اليمين */
+.nav {
+    grid-column: 1 / 2; /* في العمود الأول (اليمين في RTL) */
+    display: flex;
+    justify-content: flex-start;
+}
+
+/* اسم الموقع في الوسط */
+.site-name-center {
+    grid-column: 2 / 3; /* في العمود الثاني (الوسط) */
+    justify-self: center;
+    position: relative; /* لإلغاء absolute */
+    transform: none; /* لإلغاء transform */
+    z-index: 10;
+}
+
+.site-name-center .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.site-name-center .logo i {
+    font-size: 2rem;
+    animation: pulse 2s infinite;
+}
+
+.site-name-text {
+    background: linear-gradient(45deg, #6366f1, #8b5cf6, #06b6d4);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s ease-in-out infinite;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+@keyframes pulse {
+    0%, 100% { 
+        transform: scale(1);
+        color: var(--primary-color);
+    }
+    50% { 
+        transform: scale(1.1);
+        color: var(--secondary-color);
+    }
+}
+
+@keyframes gradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* الأزرار على اليسار */
+.header-actions-left {
+    grid-column: 3 / 4; /* في العمود الثالث (اليسار في RTL) */
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+.nav-list {
+    display: flex;
+    list-style: none;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.nav-link:hover,
+
+/* ===================================================================== */
+/* === الكود الكامل والجديد لتصميم زر البحث المتقدم === */
+/* ===================================================================== */
+
+/* ===================================================================== */
+/* === الكود النهائي لزر البحث المصغّر === */
+/* ===================================================================== */
+
+/* حاوية زر البحث الرئيسية */
+#search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0.75); /* -- هذا هو السطر الجديد الذي يقوم بتصغير كل شيء -- */
+  margin: 0 -20px; /* تعديل الهوامش ليتناسب مع الحجم الجديد */
+  overflow: visible !important;
+}
+
+/* كل هذه العناصر ستكون خلف حقل الإدخال لإنشاء التأثيرات */
+#search-wrapper .white,
+#search-wrapper .darkBorderBg,
+#search-wrapper .glow {
+  max-height: 70px;
+  max-width: 314px;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  overflow: hidden;
+  z-index: -1;
+  border-radius: 12px;
+  filter: blur(3px);
+}
+
+/* حقل الإدخال الرئيسي */
+#search-wrapper .input {
+  background-color: #010201; /* لون أسود عميق */
+  border: none;
+  width: 301px;
+  height: 56px;
+  border-radius: 10px;
+  color: white;
+  padding-inline: 59px;
+  font-size: 18px;
+  outline: none;
+  font-family: 'Cairo', sans-serif;
+}
+
+#search-wrapper .input::placeholder {
+  color: #c0b9c0;
+}
+
+/* ... بقية الكود الذي أرسلته أنت يبقى كما هو تمامًا ... */
+
+#search-wrapper .white { max-height: 63px; max-width: 307px; border-radius: 10px; filter: blur(2px); }
+#search-wrapper .white::before {
+  content: ""; z-index: -2; text-align: center; top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotate(83deg); position: absolute;
+  width: 600px; height: 600px; background-repeat: no-repeat; background-position: 0 0;
+  filter: brightness(1.4); background-image: conic-gradient( rgba(0, 0, 0, 0) 0%, #a099d8, rgba(0, 0, 0, 0) 8%, rgba(0, 0, 0, 0) 50%, #dfa2da, rgba(0, 0, 0, 0) 58% );
+  transition: all 2s;
+}
+#search-wrapper .darkBorderBg { max-height: 65px; max-width: 312px; }
+#search-wrapper .darkBorderBg::before {
+  content: ""; z-index: -2; text-align: center; top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotate(82deg); position: absolute;
+  width: 600px; height: 600px; background-repeat: no-repeat; background-position: 0 0;
+  background-image: conic-gradient( rgba(0, 0, 0, 0), #18116a, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0) 50%, #6e1b60, rgba(0, 0, 0, 0) 60% );
+  transition: all 2s;
+}
+#search-wrapper .glow { overflow: hidden; filter: blur(30px); opacity: 0.4; max-height: 130px; max-width: 354px; }
+#search-wrapper .glow:before {
+  content: ""; z-index: -2; text-align: center; top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotate(60deg); position: absolute;
+  width: 999px; height: 999px; background-repeat: no-repeat; background-position: 0 0;
+  background-image: conic-gradient( #000, #402fb5 5%, #000 38%, #000 50%, #cf30aa 60%, #000 87% );
+  transition: all 2s;
+}
+#search-wrapper:hover > .darkBorderBg::before, #search-wrapper:hover > .white::before, #search-wrapper:hover > .glow::before {
+    transform: translate(-50%, -50%) rotate(-97deg);
+}
+#search-wrapper:focus-within > .darkBorderBg::before, #search-wrapper:focus-within > .white::before, #search-wrapper:focus-within > .glow::before {
+  transform: translate(-50%, -50%) rotate(443deg);
+  transition: all 4s;
+}
+#search-wrapper #search-icon { position: absolute; left: 20px; top: 15px; pointer-events: none; }
+
+html[dir="ltr"] .search-input {
+    padding: 0.6rem 2.8rem 0.6rem 1rem; /* عكس المساحة الفارغة لتصبح على اليمين */
+}
+
+html[dir="ltr"] .search-btn {
+    left: auto; /* إلغاء التموضع على اليسار */
+    right: 0;   /* تحديد التموضع على اليمين */
+}
+
+/* Sidebar Toggle - Hidden */
+.sidebar-toggle {
+    display: none !important;
+}
+
+/* Main Content */
+.main-content {
+    padding-top: 7rem; /* << التغيير: استخدمنا padding بدلاً من margin لإضافة مساحة داخلية */
+    min-height: 100vh;
+}
+
+/* Hero Section */
+.hero {
+    padding: 2rem 0;
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23374151" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.5;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.hero-stats {
+    display: flex;
+    gap: 2rem;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.hero-visual {
+    position: relative;
+    height: 300px;
+}
+
+.floating-cards {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.floating-card {
+    position: absolute;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: var(--shadow-xl);
+    animation: float 6s ease-in-out infinite;
+}
+
+.floating-card i {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.floating-card span {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.card-1 {
+    top: 20%;
+    right: 10%;
+    animation-delay: 0s;
+}
+
+.card-2 {
+    top: 50%;
+    right: 50%;
+    animation-delay: 2s;
+}
+
+.card-3 {
+    bottom: 20%;
+    right: 20%;
+    animation-delay: 4s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+/* Quick Access Section */
+.quick-access {
+    padding: 4rem 0;
+}
+
+.section-title {
+    font-size: 2.5rem; /* يجعله كبيراً مثل العنوان الرئيسي */
+    font-weight: 700;
+    text-align: center; /* يضعه في وسط الشاشة */
+    margin: 4rem 0 3rem 0; /* يعطيه مساحة فارغة فوقه وتحته */
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+.platform-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.platform-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.platform-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.platform-card:hover::before {
+    opacity: 0.1;
+}
+
+.platform-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-xl);
+}
+
+.platform-icon {
+    width: 4rem;
+    height: 4rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.platform-icon i {
+    font-size: 2rem;
+    color: white;
+}
+
+.platform-card h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.platform-card p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.platform-count {
+    display: inline-block;
+    background: var(--primary-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-lg);
+    font-size: 0.875rem;
+    font-weight: 600;
+    position: relative;
+    z-index: 2;
+}
+
+/* Featured Programs Section */
+.featured-programs {
+    padding: 2rem 0;
+    background: var(--bg-secondary);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.filter-tabs {
+    display: flex;
+    gap: 0.5rem;
+    background: var(--bg-card);
+    padding: 0.5rem;
+    border-radius: var(--radius-lg);
+}
+
+.filter-tab {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+}
+
+.filter-tab.active,
+.filter-tab:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* ===================================================================== */
+/* === تصميم الأقسام الأفقية للبرامج === */
+/* ===================================================================== */
+
+
+
+/* ===================================================================== */
+/* === هذا هو الكود الكامل والجديد لتصميم البطاقات === */
+/* ===================================================================== */
+
+.programs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 1.5rem; /* مسافة لتناسب تأثير التوهج */
+    padding: 2rem 0;
+    justify-items: center;
+}
+
+/* الكود الذي أرسلته أنت - الإطار الخارجي المتوهج */
+.card {
+    width: 190px;
+    height: 254px;
+    background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
+    border-radius: 22px;
+    transition: all .3s;
+    cursor: pointer;
+}
+
+.card:hover {
+    box-shadow: 0px 0px 30px 1px rgba(0, 255, 117, 0.30);
+}
+
+.card-image-only {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* تضمن ملء المساحة دون تشويه */
+}
+
+/* الكود الذي أرسلته أنت - البطاقة الداخلية السوداء */
+.card2 {
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-card);
+    border-radius: 20px;
+    transition: all .2s;
+    overflow: hidden; /* مهم لقص زوائد الصورة */
+}
+
+.card2:hover {
+    transform: scale(0.98);
+}
+
+/* تصميم المحتوى داخل البطاقة الداخلية */
+.card-content {
+    padding: 0rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* تضمن ملء المساحة دون تشويه */
+}
+
+.card-title {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    /* مساحة كافية لسطرين ثم يضع "..." */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 2.6em; /* حجز مساحة لسطرين */
+    margin-bottom: auto; /* يدفع العنوان للأعلى والتفاصيل للأسفل */
+}
+
+.card-meta {
+    padding-top: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.loading-spinner {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 4rem;
+    color: var(--text-secondary);
+}
+
+.loading-spinner i {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.program-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: var(--transition);
+    cursor: pointer;
+    height: fit-content;
+    max-width: 180px;
+    margin: 0 auto;
+}
+
+.program-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+.program-image {
+    width: 100%;
+    height: 120px;
+    background: var(--bg-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.program-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.program-card:hover .program-image img {
+    transform: scale(1.05);
+}
+
+.program-info {
+    padding: 0.8rem; /* Increased padding */
+}
+
+/* FIXED: Program title not appearing */
+.program-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem; /* Adjusted margin */
+    color: var(--text-primary);
+    line-height: 1.4; /* Adjusted line-height */
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* ALLOWS 2 LINES - THIS IS THE FIX */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 2.5em; /* Ensures space for 2 lines */
+}
+
+.program-description {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.program-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.program-platform {
+    display: flex;
+    align-items: center;
+    gap: 0.15rem;
+    color: var(--text-secondary);
+    font-size: 0.6rem;
+}
+
+.program-platform i {
+    font-size: 0.7rem;
+}
+
+.download-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+    font-size: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.15rem;
+}
+
+.download-btn:hover {
+    background: var(--primary-dark);
+    transform: scale(1.05);
+}
+
+.download-btn i {
+    font-size: 0.7rem;
+}
+
+/* Features Section */
+.features {
+    padding: 4rem 0;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.feature-card {
+    text-align: center;
+    padding: 2rem;
+}
+
+.feature-icon {
+    width: 4rem;
+    height: 4rem;
+    background: linear-gradient(135deg, var(--accent-color), var(--success-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.feature-icon i {
+    font-size: 2rem;
+    color: white;
+}
+
+.feature-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.feature-card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Footer */
+.footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    padding: 3rem 0 1rem;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.footer-section h4 {
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-section ul li a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.footer-section ul li a:hover {
+    color: var(--primary-color);
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.social-links a {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: var(--bg-card);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.social-links a:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.contact-info p {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.contact-info i {
+    color: var(--primary-color);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+
+.powered-by {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.hasan-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.hasan-link:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background: rgba(15, 15, 35, 0.98);
+        backdrop-filter: blur(10px);
+    }
+
+    .header-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.75rem 0;
+        flex-wrap: nowrap;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        flex-shrink: 0;
+    }
+
+    .logo i {
+        font-size: 1.5rem;
+    }
+
+    .nav-list {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem;
+        padding: 1rem 0;
+        background: var(--bg-primary);
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        border-top: 1px solid var(--border-color);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .nav-list.active {
+        display: flex;
+    }
+
+    .nav-link {
+        padding: 0.75rem 1rem;
+        text-align: center;
+        justify-content: center;
+        margin: 0 1rem;
+        border-radius: var(--radius-md);
+    }
+
+    .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-shrink: 0;
+    }
+
+    .search-container {
+    position: relative; /* ضروري لوضع الأيقونة داخل الحقل */
+    display: flex;
+    align-items: center;
+}
+
+    .language-selector {
+        margin: 0;
+    }
+
+    .language-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+        min-width: 80px;
+    }
+
+
+
+    .sidebar-toggle {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        transform: none;
+        background: var(--primary-color);
+        border: none;
+        border-radius: 50%;
+        width: 3rem;
+        height: 3rem;
+        color: white;
+        font-size: 1.25rem;
+        cursor: pointer;
+        z-index: 1000;
+        transition: var(--transition);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .sidebar-toggle:hover {
+        background: var(--primary-dark);
+        transform: scale(1.1);
+    }
+
+    .main-content {
+        margin-top: 4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 0.5rem;
+    }
+    
+    .hero-title {
+        font-size: 1.6rem;
+    }
+    
+    .platform-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero-stats {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-light);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+
+/* Powered by HASAN styling */
+.powered-by {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.hasan-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.hasan-link:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+
+
+/* Download Page Styles */
+.download-section {
+    padding: 2rem 0;
+    background: var(--bg-secondary);
+    min-height: calc(100vh - 200px);
+}
+
+.download-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: var(--bg-card);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    box-shadow: var(--shadow-lg);
+}
+
+.program-info {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.program-image {
+    flex-shrink: 0;
+}
+
+.program-icon {
+    width: 120px;
+    height: 120px;
+    border-radius: var(--radius-lg);
+    object-fit: cover;
+    box-shadow: var(--shadow-md);
+}
+
+.program-details {
+    flex: 1;
+}
+
+.program-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.program-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.program-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.program-meta i {
+    color: var(--primary-color);
+}
+
+.program-stats {
+    display: flex;
+    gap: 2rem;
+}
+
+.program-stats .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.program-stats .stat-item i {
+    color: var(--primary-color);
+}
+
+.download-action {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.download-btn {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    padding: 1.25rem 3rem;
+    border-radius: var(--radius-lg);
+    font-size: 1.25rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    box-shadow: var(--shadow-lg);
+}
+
+.download-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-xl);
+}
+
+.download-btn:active {
+    transform: translateY(-1px);
+}
+
+.download-note {
+    margin-top: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.download-note i {
+    color: var(--success-color);
+}
+
+.program-description,
+.system-requirements,
+.related-programs {
+    margin-bottom: 2rem;
+}
+
+.program-description h3,
+.system-requirements h3,
+.related-programs h3 {
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary-color);
+    display: inline-block;
+}
+
+.description-content {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+.requirements-content ul {
+    list-style: none;
+    padding: 0;
+}
+
+.requirements-content li {
+    color: var(--text-secondary);
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.requirements-content li:before {
+    content: "✓";
+    color: var(--success-color);
+    font-weight: bold;
+}
+
+.related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.related-program {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    text-align: center;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.related-program:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.related-program img {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-md);
+    object-fit: cover;
+    margin-bottom: 0.5rem;
+}
+
+.related-program h4 {
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Responsive Design for Download Page */
+@media (max-width: 768px) {
+    .download-container {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+    
+    .program-info {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .program-icon {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto;
+    }
+    
+    .program-title {
+        font-size: 1.5rem;
+    }
+    
+    .program-meta {
+        justify-content: center;
+    }
+    
+    .program-stats {
+        justify-content: center;
+    }
+    
+    .download-btn {
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+    }
+}
+
+/* Program Card Clickable Image */
+.program-card .program-image {
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.program-card .program-image:hover {
+    transform: scale(1.05);
+}
+
+.program-card .download-btn {
+    display: none;
+}
+
+
+/* Language Selector Styles */
+.language-selector {
+    position: relative;
+    margin-left: 1rem;
+}
+
+.language-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 0.5rem 1rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    min-width: 100px;
+}
+
+.language-btn:hover {
+    background: var(--bg-secondary);
+    border-color: var(--primary-color);
+}
+
+.language-btn i:last-child {
+    font-size: 0.8rem;
+    transition: var(--transition);
+}
+
+.language-dropdown.show .language-btn i:last-child {
+    transform: rotate(180deg);
+}
+
+.language-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    min-width: 120px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: var(--transition);
+}
+
+.language-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.language-option {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: var(--transition);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.language-option:last-child {
+    border-bottom: none;
+}
+
+.language-option:hover {
+    background: var(--bg-secondary);
+    color: var(--primary-color);
+}
+
+.language-option.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+.language-option.active:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* RTL/LTR Support */
+body.ltr {
+    direction: ltr;
+}
+
+body.ltr .language-selector {
+    margin-left: 0;
+    margin-right: 1rem;
+}
+
+body.ltr .language-dropdown {
+    right: auto;
+    left: 0;
+}
+
+body.ltr .header-content {
+    flex-direction: row;
+}
+
+body.ltr .nav-list {
+    flex-direction: row;
+}
+
+body.ltr .footer-content {
+    text-align: left;
+}
+
+body.ltr .program-card {
+    text-align: left;
+}
+
+/* Responsive Language Selector */
+@media (max-width: 768px) {
+    .language-selector {
+        margin: 0;
+        order: -1;
+    }
+    
+    .language-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+        min-width: 80px;
+    }
+    
+    .language-dropdown {
+        min-width: 100px;
+    }
+    
+    .language-option {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.9rem;
+    }
+}
+
+
+/* Animated KURDIN Logo */
+.animated-logo {
+    position: relative;
+    overflow: hidden;
+}
+
+.animated-logo span {
+    display: inline-block;
+    animation: logoSlide 4s ease-in-out infinite;
+    animation-delay: 1s;
+}
+
+@keyframes logoSlide {
+    0%, 20% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    
+    30%, 50% {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+    
+    60%, 80% {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+    
+    90%, 100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Pause animation on hover */
+.animated-logo:hover span {
+    animation-play-state: paused;
+}
+
+/* RTL Animation for Arabic/Kurdish */
+body[dir="rtl"] .animated-logo span {
+    animation: logoSlideRTL 4s ease-in-out infinite;
+    animation-delay: 1s;
+}
+
+@keyframes logoSlideRTL {
+    0%, 20% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    
+    30%, 50% {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+    
+    60%, 80% {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+    
+    90%, 100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* LTR Animation for English */
+body[dir="ltr"] .animated-logo span {
+    animation: logoSlide 4s ease-in-out infinite;
+    animation-delay: 1s;
+}
+
+/* Responsive animation adjustments */
+@media (max-width: 768px) {
+    @keyframes logoSlide {
+        0%, 20% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        30%, 50% {
+            transform: translateX(50px);
+            opacity: 0;
+        }
+        
+        60%, 80% {
+            transform: translateX(-50px);
+            opacity: 0;
+        }
+        
+        90%, 100% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes logoSlideRTL {
+        0%, 20% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        30%, 50% {
+            transform: translateX(-50px);
+            opacity: 0;
+        }
+        
+        60%, 80% {
+            transform: translateX(50px);
+            opacity: 0;
+        }
+        
+        90%, 100% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+}
+
+/* Smooth logo icon animation */
+.animated-logo i {
+    transition: var(--transition);
+    animation: logoIconPulse 4s ease-in-out infinite;
+}
+
+@keyframes logoIconPulse {
+    0%, 100% {
+        transform: scale(1);
+        color: var(--primary-color);
+    }
+    
+    50% {
+        transform: scale(1.1);
+        color: var(--secondary-color);
+    }
+}
+
+.category-filters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* للسماح بنزول الأزرار لسطر جديد في الشاشات الصغيرة */
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.filter-btn {
+    background-color: var(--bg-card);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    padding: 0.7rem 1.5rem;
+    border-radius: 50px; /* يجعل الأزرار دائرية الأطراف */
+    font-family: 'Cairo', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+.filter-btn.active {
+    background: var(--primary-gradient); /* استخدام تدرج لوني للزر النشط */
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.25);
+}
+
+@media (max-width: 992px) {
+    /* إخفاء قائمة التنقل العادية في الشاشات الأصغر */
+    .nav {
+        display: none;
+        padding: 0 20px;
+    }
+
+
+    /* عندما تكون القائمة مفتوحة */
+    .nav.active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--bg-card); /* خلفية القائمة المفتوحة */
+        padding: 1rem;
+        border-top: 1px solid var(--border-color);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    .nav.active .nav-list {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .programs-grid {
+    grid-template-columns: repeat(2, 1fr); /* << عمودان في الموبايل */
+    gap: 1rem;
+}
+}
+
+@media (max-width: 768px) {
+    /* تعديلات عامة للشاشات الصغيرة */
+    .container {
+        padding: 0 0.8rem;
+    }
+    .header-content {
+        padding: 0.5rem 0;
+    }
+    #search-wrapper {
+        display: none; /* إخفاء البحث لتوفير مساحة */
+    }
+
+    /* === هذا هو الكود الذي يجعله 4 بطاقات في الموبايل === */
+    .programs-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.5rem; /* تقليل المسافة بين البطاقات */
+    }
+    .card {
+        width: 100%; /* جعل البطاقة تأخذ كامل المساحة المتاحة لها */
+        height: auto;
+    }
+    .card2 {
+        width: 100%;
+        height: 100%;
+    }
+    .card-title {
+        font-size: 0.7rem; /* تصغير حجم الخط ليتناسب */
+        min-height: 2.4em;
+    }
+    .card-meta {
+        font-size: 0.6rem;
+    }
+    .card-image {
+        height: 80px; /* تصغير الصورة قليلاً */
+    }
+}
+
+@media (max-width: 480px) {
+    /* === يمكنك تعديله ليصبح 3 بطاقات في الشاشات الأصغر جدًا === */
+    .programs-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ========================================================== */
+/* === كود جديد لتوافق لوحة التحكم مع الموبايل === */
+/* ========================================================== */
+@media (max-width: 992px) {
+    .admin-dashboard {
+        grid-template-columns: 1fr; /* عرض المحتوى فقط */
+        grid-template-areas: "header" "main";
+        padding: 0 20px;
+    }
+    .admin-sidebar {
+        position: fixed;
+        top: 0;
+        right: -300px; /* إخفاء القائمة خارج الشاشة */
+        width: 280px;
+        height: 100vh;
+        z-index: 1001;
+        transition: right 0.3s ease-in-out;
+        border-right: none;
+        border-left: 1px solid var(--border-color); /* إضافة خط فاصل */
+    }
+    .admin-sidebar.active {
+        right: 0; /* إظهار القائمة */
+    }
+
+    /* إضافة زر الهامبرغر في الهيدر (تحتاج إلى إضافته في HTML) */
+    .mobile-menu-btn { display: block; /* سيتم شرحه لاحقاً */ }
+}
+.category-filters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.filter-btn {
+    background-color: var(--bg-card);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    padding: 0.7rem 1.5rem;
+    border-radius: 50px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.25);
+}
+
+/* ===================================================================== */
+/* === تحسينات التصميم المتجاوب للبطاقات والأزرار === */
+/* ===================================================================== */
+
+@media (max-width: 992px) {
+    .programs-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 أعمدة في الشاشات المتوسطة */
+        gap: 1rem;
+        padding: 0 20px;
+    }
+    .card { width: 100%; height: auto; }
+    .card2 { width: 100%; height: auto; }
+
+    /* إخفاء التنقل التقليدي وإظهار زر الهامبرغر */
+    .nav { display: none; }
+  
+        display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0;
+        background: var(--bg-card); padding: 1rem; border-top: 1px solid var(--border-color); box-shadow: 0 10px 20px rgba(0,0,0,0.2); z-index: 999;
+    }
+    .nav.active .nav-list { flex-direction: column; width: 100%; }
+    .nav-list li { margin-bottom: 0.5rem; }
+    .nav-link { justify-content: center; padding: 0.8rem 1rem; }
+    .header-actions #search-wrapper { display: none; } /* إخفاء البحث في شاشات الموبايل */
+
+
+@media (max-width: 768px) {
+    .programs-grid {
+        grid-template-columns: repeat(4, 1fr); /* 4 أعمدة في شاشات الجوال الكبيرة */
+        gap: 0.5rem;
+    }
+    .card-title { font-size: 0.7rem; min-height: 2.4em; }
+    .card-meta { font-size: 0.6rem; }
+    .card-image { height: 80px; }
+
+    /* تحسينات عامة للموبايل */
+    .container { padding: 0 0.8rem; }
+    .header-content { padding: 0.5rem 0; }
+    .footer-content { grid-template-columns: 1fr; text-align: center; }
+    .footer-section { margin-bottom: 1.5rem; }
+    .footer-section .footer-logo, .social-links { justify-content: center; }
+}
+
+@media (max-width: 480px) {
+    .programs-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 أعمدة في الشاشات الأصغر */
+    }
+    .hero-title { font-size: 1.6rem; }
+    .hero-description { font-size: 0.9rem; }
+    .hero-stats { flex-direction: column; gap: 0.5rem; }
+    .stat-item { font-size: 0.8rem; }
+    .section-title { font-size: 1.8rem; }
+    .category-filters { gap: 0.5rem; }
+    .filter-btn { padding: 0.5rem 1rem; font-size: 0.9rem; }
+}
+
+#search-wrapper {
+    position: relative;
+}
+
+#searchResultsDropdown {
+    display: none;
+    position: absolute;
+    top: 110%; 
+    left: 0;
+    right: 0;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 1001;
+    
+    /* الخصائص المسؤولة عن التمرير */
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.2s ease;
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item:hover {
+    background-color: var(--primary-color);
+}
+
+.search-result-item img {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+}
+
+.search-result-item span {
+    font-weight: 600;
+}
+
+.no-results {
+    padding: 1rem;
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+
+body.no-scroll {
+    overflow: hidden; /* لمنع تمرير الخلفية */
+}
+
+@media (max-width: 992px) {
+    .menu-toggle {
+        display: block;
+        padding: 0 20px; /* إظهار زر الهامبرغر في الموبايل */
+    }
+
+    .header .nav {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        right: -100%; /* يبدأ من خارج الشاشة */
+        width: 280px;
+        height: 100%;
+        padding-top: 4rem;
+        background: var(--bg-secondary);
+        box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+        z-index: 999;
+        transition: right 0.3s ease-in-out;
+        overflow-y: auto;
+    }
+
+    /* للغات من اليسار لليمين */
+    html[dir="ltr"] .header .nav {
+        right: auto;
+        left: -100%;
+        transition: left 0.3s ease-in-out;
+    }
+
+    /* عند إضافة كلاس "active" */
+    .header .nav.active {
+        right: 0;
+    }
+    html[dir="ltr"] .header .nav.active {
+        left: 0;
+    }
+    
+    .header .nav .nav-list {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        gap: 0;
+    }
+
+    .header .nav .nav-link {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1.1rem;
+        justify-content: flex-start;
+    }
+}
+
+.filters button {
+  margin: 5px;
+  padding: 8px 15px;
+  cursor: pointer;
+  border: none;
+  background-color: #4f46e5;
+  color: white;
+  border-radius: 5px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.filters button:hover {
+  background-color: #3730a3;
+}
+
+
+.bulk-actions-container {
+    margin-bottom: 1rem; /* إضافة مسافة بين الزر والجدول */
+    display: flex;
+    justify-content: flex-start; /* وضع الزر في بداية السطر */
+}
+
+.bulk-action-btn {
+    background-color: var(--blue); /* استخدام اللون الأزرق لتمييزه */
+    color: white;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.bulk-action-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+/* تعديل بسيط لترتيب خانة الاختيار في رأس الجدول */
+.programs-table th:first-child,
+.programs-table td:first-child {
+    width: 1%; /* لتقليل عرض العمود الأول */
+    text-align: center;
+}
+
+/* Auth Buttons Styles */
+.auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.auth-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+    font-weight: 500;
+    font-size: 0.875rem;
+    white-space: nowrap;
+}
+
+.login-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+}
+
+.login-btn:hover {
+    background: var(--bg-card);
+    border-color: var(--primary-color);
+}
+
+.register-btn {
+    background: var(--primary-color);
+    color: white;
+}
+
+.register-btn:hover {
+    background: var(--primary-dark);
+}
+
+/* User Menu Styles */
+.user-menu {
+    position: relative;
+}
+
+.user-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+.user-btn:hover {
+    border-color: var(--primary-color);
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    min-width: 150px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: var(--transition);
+}
+
+.user-menu:hover .user-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.user-option {
+    display: block;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 0.75rem 1rem;
+    transition: var(--transition);
+    font-size: 0.875rem;
+}
+
+.user-option:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+.user-option:first-child {
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.user-option:last-child {
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+
+
+
+
+/* ========================================================================= */
+/* === الكود النهائي للسلايدر (مع z-index المصحح) === */
+/* ========================================================================= */
+
+.featured-slider {
+    position: relative;
+    width: 100%;
+    height: 70vh; /* يمكنك تعديل الارتفاع */
+    min-height: 500px;
+    overflow: hidden;
+    background-color: var(--bg-secondary);
+}
+.slider-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.slider-wrapper {
+    display: flex;
+    width: 300%; /* 100% * 3 شرائح */
+    height: 100%;
+    transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.slider-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+     flex-shrink: 0;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    z-index: 1; /* الطبقة السفلية */
+}
+.slider-slide.active {
+    opacity: 1;
+    z-index: 2; /* الشريحة النشطة فوق الشرائح الأخرى */
+}
+
+/* طبقة التعتيم */
+.slider-slide::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(15, 15, 35, 0.6);
+    z-index: 1; /* فوق الصورة */
+}
+
+/* **الإصلاح الرئيسي هنا:** */
+.slide-content, .slider-dots, .slider-btn {
+    position: absolute; /* ضروري لعمل z-index */
+    z-index: 5; /* اجعل هذه العناصر في الطبقة العليا دائمًا */
+}
+
+/* تصميم محتوى الشريحة (النصوص) */
+.slide-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+    padding: 2rem;
+    max-width: 700px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
+}
+.slider-slide.active .slide-content {
+    opacity: 1;
+    transform: translateY(0);
+}
+.slide-title {
+    font-size: 3.8rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 20px rgba(45, 212, 191, 0.5);
+    background: linear-gradient(135deg, #ffffff, #2dd4bf);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.slide-description {
+    font-size: 1.2rem;
+    margin-bottom: 2.5rem;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+    color: var(--text-secondary);
+}
+.slide-btn {
+    display: inline-block;
+    padding: 14px 40px;
+    
+    /* === التدرج اللوني الأصفر الجديد === */
+    background-image: linear-gradient(135deg, #f59e0b 0%, #facc15 100%);
+    
+    background-size: 200% auto;
+    
+    /* === تغيير لون النص ليصبح داكناً وأكثر وضوحاً === */
+    color: var(--bg-primary); 
+    
+    text-decoration: none;
+    border-radius: 50px;
+    
+    /* === جعل الخط أعرض ليتناسب مع التصميم === */
+    font-weight: 800; 
+    
+    transition: all 0.4s ease;
+    
+    /* === تعديل الظل ليتناسب مع اللون الأصفر === */
+    box-shadow: 0 5px 20px rgba(245, 158, 11, 0.4); 
+    
+    border: none;
+}
+
+/* تصميم نقاط التحكم */
+.slider-dots {
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+}
+.slider-dots, .slider-btn {
+    position: absolute;
+    z-index: 3; /* اجعلها دائمًا في المقدمة */
+}
+
+.slider-dots {
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+}
+.slider-dot.active {
+    background: white;
+    width: 30px;
+    border-radius: 10px;
+}
+
+/* تصميم أزرار الأسهم */
+.slider-btn {
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+.slider-btn:hover { background-color: var(--primary-color); }
+.prev-btn { left: 30px; } 
+.next-btn { right: 30px; }
+.prev-btn { left: 30px; }
+.next-btn { right: 30px; }
+
+/* ========================================================== */
+/* === الكود الكامل لتصميم القائمة الجانبية وكل التعديلات === */
+/* ========================================================== */
+
+/* إصلاح حجم الشعار ومحاذاة الهيدر */
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.site-name-center {
+    grid-column: initial; /* إلغاء خصائص الشبكة القديمة */
+    justify-self: initial;
+    position: relative;
+    transform: none;
+}
+.site-name-center .logo {
+    font-size: 1.5rem; /* تصغير حجم الشعار */
+    gap: 0.4rem;
+}
+.site-name-center .logo i {
+    font-size: 1.7rem;
+}
+
+
+/* تصميم القائمة الجانبية الرئيسية */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -300px; /* يبدأ خارج الشاشة (يمين لـ RTL) */
+    width: 280px;
+    height: 100%;
+    background: var(--bg-primary);
+    border-left: 1px solid var(--border-color);
+    box-shadow: -5px 0 20px rgba(0,0,0,0.25);
+    z-index: 2000;
+    transition: right 0.4s ease;
+    display: flex;
+    flex-direction: column;
+}
+html[dir="ltr"] .sidebar {
+    right: auto;
+    left: -300px;
+    transition: left 0.4s ease;
+}
+
+.sidebar.active {
+    right: 0;
+}
+html[dir="ltr"] .sidebar.active {
+    left: 0;
+}
+
+/* تصميم غطاء الخلفية */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+.sidebar-open .sidebar-overlay {
+    opacity: 1;
+    visibility: visible;
+}
+body.sidebar-open {
+    overflow: hidden; /* منع تمرير الصفحة الخلفية */
+}
+
+
+/* قسم المستخدم في القائمة */
+.sidebar-auth {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+#loggedOutView {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.sidebar-btn {
+    padding: 0.8rem;
+    text-align: center;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition-fast);
+}
+.sidebar-btn.login {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+.sidebar-btn.register {
+    background: var(--primary-color);
+    color: white;
+}
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+.user-avatar { font-size: 2.5rem; color: var(--primary-color); }
+#sidebarUserName { font-size: 1.1rem; font-weight: 600; }
+
+.user-options a {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+}
+.user-options a:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+
+/* قسم التنقل في القائمة */
+.sidebar-nav {
+    flex-grow: 1; /* يجعل هذا القسم يملأ المساحة المتبقية */
+    padding: 1rem 0;
+    overflow-y: auto;
+}
+.nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.9rem 1rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    cursor: pointer;
+}
+.nav-item.active { background-color: var(--primary-color); color: white; }
+.nav-item > a { color: inherit; text-decoration: none; display: flex; align-items: center; flex-grow: 1; }
+.nav-item i { width: 30px; }
+.toggle-icon { transition: transform 0.3s ease; }
+.nav-item.open .toggle-icon { transform: rotate(180deg); }
+
+/* تصميم القوائم الفرعية */
+.submenu {
+    display: none;
+    background-color: var(--bg-secondary);
+    padding: 0.5rem 0;
+    padding-right: 2.5rem; /* مسافة بادئة */
+}
+.submenu a {
+    display: block;
+    padding: 0.7rem 1rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    margin: 0.2rem 0.5rem;
+}
+.submenu a:hover { background: var(--bg-tertiary); color: white; }
+
+
+/* قسم اللغات في القائمة */
+.sidebar-lang {
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+.sidebar-lang .lang-btn {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: 600;
+}
+.sidebar-lang .lang-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* =============================================== */
+/* === الكود النهائي والوحيد لزر القائمة الجانبية === */
+/* =============================================== */
+
+/* 1. تصميم الزر الأساسي ومكانه */
+.menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 28px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 2001; /* الأهم: اجعله فوق القائمة نفسها (z-index للقائمة 2000) */
+    position: relative; /* ضروري لعمل الأنيميشن بشكل صحيح */
+}
+
+.menu-toggle span {
+    width: 100%;
+    height: 3px;
+    background-color: var(--text-primary);
+    border-radius: 2px;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    transform-origin: center; /* يضمن أن الدوران يحدث من المنتصف */
+}
+
+/* 2. تحويل الزر إلى علامة (X) عند فتح القائمة */
+body.sidebar-open .menu-toggle span:nth-child(1) {
+    transform: translateY(10.5px) rotate(45deg);
+}
+
+body.sidebar-open .menu-toggle span:nth-child(2) {
+    opacity: 0;
+}
+
+body.sidebar-open .menu-toggle span:nth-child(3) {
+    transform: translateY(-10.5px) rotate(-45deg);
+}
+
+/* ========================================================== */
+/* === تصميم زر الإغلاق (X) الجديد داخل القائمة الجانبية === */
+/* ========================================================== */
+
+.sidebar-close-btn {
+    position: absolute; /* لوضعه في زاوية القائمة */
+    top: 15px;
+    right: 20px; /* في الزاوية اليمنى العلوية (لـ RTL) */
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.6rem; /* حجم أيقونة الـ X */
+    cursor: pointer;
+    line-height: 1; /* لإزالة أي مسافات إضافية */
+    padding: 5px;
+    transition: all 0.3s ease;
+}
+
+.sidebar-close-btn:hover {
+    color: white;
+    transform: rotate(90deg); /* إضافة حركة بسيطة عند التمرير */
+}
+
+/* تعديل اتجاه الزر إذا كان الموقع باللغة الإنجليزية (من اليسار لليمين) */
+html[dir="ltr"] .sidebar-close-btn {
+    right: auto;
+    left: 20px;
+}
+
+
+/* ========================================================== */
+/* === إصلاح نهائي لتداخل العناصر في رأس القائمة الجانبية === */
+/* ========================================================== */
+
+/* 1. الحل الرئيسي: إضافة "padding" لدفع المحتوى للأسفل */
+.sidebar-auth {
+    position: relative; /* مهم لضمان بقاء المحتوى ضمن الحدود */
+    padding-top: 60px; /* <--- هذا هو السطر الأهم، يدفع المحتوى للأسفل ويترك مساحة للزر */
+    min-height: 80px; /* يعطي ارتفاعاً بسيطاً للقسم ليبدو أفضل */
+}
+
+/* 2. تعديل مكان زر الإغلاق لضمان ظهوره في الزاوية اليسرى */
+.sidebar-close-btn {
+    position: absolute;
+    top: 15px;
+    left: 20px; /* <--- تحديد مكانه في اليسار */
+    right: auto;
+    z-index: 10; /* للتأكد من أنه فوق كل شيء */
+}
+/* للغات التي تبدأ من اليمين (الكود القديم صحيح لكن نعيد تأكيده) */
+html[dir="rtl"] .sidebar-close-btn {
+    left: 20px;
+    right: auto;
+}
+
+/* 3. تحسين مظهر قسم المستخدم عند تسجيل الدخول */
+#loggedInView .user-info {
+    display: flex;
+    align-items: center; /* محاذاة الصورة والاسم عمودياً */
+    gap: 12px;           /* مسافة جميلة بين الصورة والاسم */
+    margin-bottom: 1rem;
+}
+
+#loggedInView .user-avatar {
+    font-size: 2.8rem; /* حجم مناسب للأيقونة */
+}
+
+#loggedInView #sidebarUserName {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+
+/* ========================================================== */
+/* ===  إصلاح نهائي: إجبار القائمة على الفتح من اليسار دائماً  === */
+/* ========================================================== */
+
+/* 1. نحدد الوضع الافتراضي (المخفي) للقائمة ليكون على اليسار */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -300px; /* <--- أهم سطر: تبدأ مخفية على اليمين */
+    left: auto;    /* <-- إلغاء أي تموضع على اليسار */
+    width: 280px;
+    height: 100%;
+    background: var(--bg-primary);
+    border-left: 1px solid var(--border-color); /* <--- الحد الفاصل يكون على اليسار */
+    border-right: none;
+    z-index: 2000;
+    transition: right 0.4s cubic-bezier(0.7, 0, 0.2, 1); /* <--- الحركة تعتمد على محور اليمين */
+}
+
+/* 2. إظهار القائمة من اليمين عند إضافة كلاس "active" */
+body.sidebar-open .sidebar {
+    right: 0; /* <--- اجعلها تظهر وتلتصق بالحافة اليمنى */
+    left: auto;
+}
+
+/* ========================================================== */
+/* ===  الإصلاح النهائي والكامل للتصميم على الهواتف (Mobile) === */
+/* ========================================================== */
+
+/* نستخدم Media Query لتطبيق هذه التعديلات فقط على الشاشات التي عرضها 768 بكسل أو أقل */
+@media (max-width: 768px) {
+
+    /* --- الإصلاح الأول: إظهار زر القائمة الجانبية --- */
+    .header-content .nav {
+        display: none !important; /* إخفاء قائمة الهيدر القديمة بالقوة */
+    }
+    .header .menu-toggle {
+        display: flex !important; /* إظهار زر القائمة الجانبية بالقوة */
+        order: 3; /* لضمان بقائه في أقصى اليسار */
+    }
+
+    /* تعديل الهيدر ليناسب الشاشات الصغيرة */
+    .header-content {
+        padding: 0.5rem 0; /* تقليل المساحة العمودية للهيدر */
+    }
+
+    #search-wrapper {
+        display: none; /* إخفاء البحث لتوفير مساحة أكبر (سلوك شائع في الهواتف) */
+    }
+    
+    .site-name-center .logo {
+        font-size: 1.3rem; /* تصغير حجم الشعار قليلاً */
+    }
+
+
+    /* --- الإصلاح الثاني: جعل البطاقات والصور متناسقة --- */
+    .programs-grid {
+        grid-template-columns: repeat(3, 1fr); /* عرض 3 بطاقات في السطر الواحد */
+        gap: 0.8rem; /* تقليل المسافة بين البطاقات */
+    }
+
+    .programs-horizontal-wrapper {
+        gap: 0.8rem; /* تقليل المسافة في الأشرطة الأفقية أيضاً */
+    }
+
+    .card {
+        width: 100%; /* اجعل الإطار الخارجي يملأ المساحة المتاحة له */
+        height: auto; /* الأهم: اجعل ارتفاع الإطار تلقائياً ليتناسب مع الصورة */
+        aspect-ratio: 2 / 3; /* حافظ على النسبة الباعية للبطاقة (شكل بوستر) */
+    }
+    .card2 {
+        width: 100%;
+        height: 100%; /* اجعل البطاقة الداخلية تملأ الإطار بالكامل */
+    }
+
+    .card-image {
+        width: 100%;
+        height: 100%; /* الأهم: اجعل الصورة تملأ البطاقة الداخلية بالكامل */
+        object-fit: cover; /* يضمن ملء الصورة للمساحة دون تشويه */
+    }
+
+}
+
+/* ========================================================== */
+/* ===  الإصلاح النهائي والكامل للتصميم على الهواتف (Mobile) === */
+/* ========================================================== */
+
+/* نستخدم Media Query لتطبيق هذه التعديلات فقط على الشاشات التي عرضها 768 بكسل أو أقل */
+@media (max-width: 768px) {
+
+
+    /* --- الإصلاح الأول: إظهار زر القائمة الجانبية --- */
+    .header-content .nav {
+        display: none !important; /* إخفاء قائمة الهيدر القديمة بالقوة */
+    }
+    /* إخفاء الهيدر القديم، ولكن مع استثناء زر القائمة */
+.header {
+    background: none; /* اجعل الهيدر شفافاً */
+    border: none;
+    height: auto;
+    position: static; /* أزل تثبيته في الأعلى */
+}
+
+/* إخفاء كل محتويات الهيدر ما عدا زر القائمة */
+.header .header-center, .header .header-left, .header .nav {
+    display: none !important;
+}
+
+/* === التصميم الجديد لزر القائمة في الموبايل === */
+.header .menu-toggle {
+    display: flex !important; /* تأكد من ظهوره دائماً */
+    position: fixed; /* تثبيته على الشاشة */
+    top: 15px;       /* المسافة من الأعلى */
+    right: 15px;      /* المسافة من اليمين */
+    z-index: 2001;   /* ليكون فوق كل شيء ما عدا القائمة نفسها */
+    
+    /* تصميم جميل للزر */
+    background-color: rgba(31, 41, 55, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* تغيير لون الخطوط داخل الزر لتكون بيضاء */
+.header .menu-toggle span {
+    background-color: var(--text-primary);
+}
+
+    /* تعديل الهيدر ليناسب الشاشات الصغيرة */
+    .header-content {
+        padding: 0.5rem 0; /* تقليل المساحة العمودية للهيدر */
+    }
+
+    #search-wrapper {
+        display: none; /* إخفاء البحث لتوفير مساحة أكبر (سلوك شائع في الهواتف) */
+    }
+    
+    .site-name-center .logo {
+        font-size: 1.3rem; /* تصغير حجم الشعار قليلاً */
+    }
+
+
+    /* --- الإصلاح الثاني: جعل البطاقات والصور متناسقة --- */
+    .programs-grid {
+        grid-template-columns: repeat(3, 1fr); /* عرض 3 بطاقات في السطر الواحد */
+        gap: 0.8rem; /* تقليل المسافة بين البطاقات */
+    }
+
+    .programs-horizontal-wrapper {
+        gap: 0.8rem; /* تقليل المسافة في الأشرطة الأفقية أيضاً */
+    }
+
+    .card {
+        width: 100%; /* اجعل الإطار الخارجي يملأ المساحة المتاحة له */
+        height: auto; /* الأهم: اجعل ارتفاع الإطار تلقائياً ليتناسب مع الصورة */
+        aspect-ratio: 2 / 3; /* حافظ على النسبة الباعية للبطاقة (شكل بوستر) */
+    }
+    .card2 {
+        width: 100%;
+        height: 100%; /* اجعل البطاقة الداخلية تملأ الإطار بالكامل */
+    }
+
+    .card-image {
+        width: 100%;
+        height: 100%; /* الأهم: اجعل الصورة تملأ البطاقة الداخلية بالكامل */
+        object-fit: cover; /* يضمن ملء الصورة للمساحة دون تشويه */
+    }
+
+}
+
+/* إصلاح محاذاة وترتيب العناصر داخل القائمة الجانبية */
+.sidebar-nav .nav-item {
+    justify-content: flex-start; /* تبدأ العناصر من اليمين (في RTL) */
+}
+
+.sidebar-nav .nav-item > a, .sidebar-nav .nav-item > div {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* مسافة ثابتة بين الأيقونة والنص */
+    flex-grow: 1;
+}
+
+html[dir="ltr"] .sidebar-nav .nav-item {
+    justify-content: flex-start; /* تبدأ العناصر من اليسار (في LTR) */
+}
+
+.sidebar-nav .toggle-icon {
+    margin-left: 0; /* إلغاء أي هوامش قديمة */
+    margin-right: auto; /* يدفع السهم إلى أقصى اليسار في RTL */
+}
+
+html[dir="ltr"] .sidebar-nav .toggle-icon {
+    margin-right: 0;
+    margin-left: auto; /* يدفع السهم إلى أقصى اليمين في LTR */
+}
+
+/* ========================================================
+// ===   التصميم الجديد لزر العودة للأعلى (في الوسط)   ===
+// ======================================================== */
+#backToTopBtn {
+    position: fixed; /* يبقى ثابتاً على الشاشة */
+    bottom: 25px; /* المسافة من الأسفل */
+    left: 50%; /* حرك الزر إلى منتصف الشاشة أفقياً */
+    transform: translateX(-50%); /* اضبط مكانه بالضبط في الوسط */
+    
+    z-index: 999;
+    border: none;
+    outline: none;
+    background-color: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    padding: 0; /* سنحدد الحجم بالعرض والارتفاع */
+    border-radius: 50%; /* لجعله دائرياً */
+    font-size: 18px;
+    width: 50px;  /* عرض ثابت */
+    height: 50px; /* ارتفاع ثابت */
+
+    /* للتحكم في الظهور والإخفاء بسلاسة */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+}
+
+#backToTopBtn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0); /* حركة ظهور جميلة */
+}
+
+/* =============================================== */
+/* ===  التصميم الجديد للرابط النشط في الهيدر   === */
+/* =============================================== */
+
+/* ========================================================== */
+/* ===  الإصلاح النهائي لتأثيرات الهيدر (تأثير تعبئة الخلفية)  === */
+/* ========================================================== */
+
+/* 1. تصميم الرابط الأساسي (ثابت بدون أي حركة) */
+/* ========================================================== */
+/* ===  الإصلاح النهائي: تكبير النص + تعبئة الخلفية الثابتة  === */
+/* ========================================================== */
+
+/* 1. تصميم الرابط الأساسي */
+/* ========================================================== */
+/* === الإصلاح النهائي لتأثيرات الهيدر (تأثير الرفع الثابت) === */
+/* ========================================================== */
+
+/* 1. تصميم الرابط الأساسي */
+.nav-link {
+    color: var(--text-secondary);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    /* **الأهم: الحركة الآن ستكون عمودية فقط** */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* 2. الخلفية الملونة المخفية */
+.nav-link::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(90deg, #2DD4BF 0%, #3B82F6 100%);
+    border-radius: var(--radius-md);
+    z-index: -1;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.7, 0, 0.2, 1);
+}
+    
+/* 3. عند مرور الماوس: إظهار الخلفية + رفع النص للأعلى */
+.nav-link:hover {
+    color: white;
+    transform: translateY(-3px); /* <-- هذا هو التأثير الجديد: رفع للأعلى بمقدار 3 بكسل */
+}
+.nav-link:hover::before {
+    transform: scaleX(1);
+}
+
+/* 4. شكل الرابط النشط */
+.nav-link.active {
+    color: white;
+    transform: translateY(-3px); /* <-- الرابط النشط يكون مرفوعاً بشكل دائم */
+}
+.nav-link.active::before {
+    transform: scaleX(1);
+}
+
+/* ==================================================================== */
+/* ===  الكود الشامل والنهائي لتصميم الهيدر (النسخة الصحيحة 100%)    === */
+/* ==================================================================== */
+
+/* --- 1. تصميم الهيدر على شاشات الكمبيوتر --- */
+.header-content {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr; 
+    align-items: center;
+
+}
+
+.header-right { 
+    display: flex; 
+    justify-content: flex-start; 
+    align-items: center; 
+        gap: 5rem; /* <-- أضف هذا السطر لإنشاء مسافة */
+
+}
+.header-center { display: flex; justify-content: center; }
+.header-left { display: flex; justify-content: flex-end;
+
+    overflow: visible !important;
+}
+
+/* إعدادات روابط التنقل */
+.header .nav { display: block; }
+.nav-list {
+    display: flex;
+    gap: 1.8rem; /* <-- المسافة بين الروابط نفسها */
+}
+
+/* **إظهار زر القائمة دائماً** */
+.header .menu-toggle {
+    display: flex;
+}
+
+/* --- 2. التصميم الخاص بالهواتف (الشاشات الصغيرة) --- */
+@media (max-width: 992px) {
+    /* نخفي الروابط والبحث */
+    .header-right .nav, .header-left {
+        display: none;
+    }
+    
+    /* نعيد ترتيب الهيدر للموبايل: الشعار يسار، والزر يمين */
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    /* نتأكد من أن الشعار يذهب لليمين */
+    .header-center { 
+        order: 1; 
+        justify-content: flex-start;
+    }
+    /* نتأكد من أن زر القائمة يذهب لليسار */
+    .header-right { 
+        order: 2; 
+        justify-content: flex-end;
+    }
+}
+
+/* ==================================================================== */
+/* ===     الإصلاح النهائي لمحاذاة زر تبديل الثيم (التصميم الأصلي)     === */
+/* ==================================================================== */
+
+.sidebar-theme {
+    padding: 1rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: auto; /* يدفع الزر لأسفل القائمة */
+}
+
+/* 1. تصميم الحاوية الرئيسية للزر (مستطيل طويل) */
+.theme-switch {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* الأهم: يدفع الأيقونات للحواف البعيدة */
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 50px;
+    padding: 8px 10px; /* مسافة داخلية */
+    cursor: pointer;
+    position: relative; /* ضروري لموضع الدائرة المتحركة */
+}
+
+/* 2. تصميم أيقونتي الشمس والقمر */
+.theme-switch-icon {
+    font-size: 1.1rem; /* حجم الأيقونات */
+    color: var(--text-secondary);
+    transition: color 0.4s ease;
+    /* لا حاجة لتحديد عرض، دع flexbox يقوم بذلك */
+}
+
+/* 3. تصميم الدائرة المتحركة */
+.theme-switch-toggle {
+    position: absolute;
+    top: 50%; /* توسيط عمودي */
+    transform: translateY(-50%); /* ضبط التوسيط العمودي */
+    width: 32px;
+    height: 32px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    /* حركة ناعمة جداً */
+    transition: transform 0.4s cubic-bezier(0.7, 0, 0.2, 1);
+}
+
+/* =================== حالات التشغيل (المحاذاة الصحيحة) =================== */
+
+/* --- الوضع الداكن (الافتراضي لـ RTL) --- */
+.theme-switch-toggle {
+    /* **الإصلاح:** تحرك إلى اليمين بمقدار 100% من عرضه ناقص المسافة من الحافة */
+    right: 8px; 
+}
+html[dir="ltr"] .theme-switch-toggle {
+    left: 8px; /* ابدأ من اليسار في LTR */
+    right: auto;
+}
+#theme-toggle-light-icon {
+    color: var(--text-secondary); /* إطفاء أيقونة الشمس */
+}
+#theme-toggle-dark-icon {
+    color: #fff; /* تفعيل أيقونة القمر */
+}
+
+
+/* --- الوضع الفاتح --- */
+body.light-mode .theme-switch-toggle {
+    /* **الإصلاح:** تحرك إلى اليسار */
+    right: calc(100% - 32px - 8px); /* العرض الكامل - عرض الدائرة - المسافة من الحافة */
+}
+html[dir="ltr"] body.light-mode .theme-switch-toggle {
+    left: calc(100% - 32px - 8px);
+    right: auto;
+}
+body.light-mode #theme-toggle-light-icon {
+    color: #f59e0b; /* تفعيل أيقونة الشمس */
+}
+body.light-mode #theme-toggle-dark-icon {
+    color: var(--text-secondary); /* إطفاء أيقونة القمر */
+}
+
+/* ========================================================== */
+/* ===  تصميم أقسام التقييم والتعليقات الجديدة (V-FINAL)   === */
+/* ========================================================== */
+
+/* --- 1. قسم التقييم بالنجوم --- */
+.rating-section {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+.rating-section h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+.stars-container {
+    font-size: 2.2rem;
+    color: #f59e0b; /* لون النجوم (أصفر) */
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+.stars-container i {
+    transition: transform 0.2s ease;
+}
+.stars-container i:hover {
+    transform: scale(1.2); /* تكبير النجمة عند مرور الماوس */
+}
+.rating-feedback {
+    color: var(--success-color);
+    font-weight: 500;
+}
+
+/* --- 2. قسم التعليقات --- */
+.comments-section {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+.comments-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+.comment-form textarea, .comment-form input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-family: inherit;
+    resize: vertical;
+}
+.comment-form textarea:focus, .comment-form input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+.comment-form button {
+    align-self: flex-start;
+    padding: 0.7rem 1.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: 600;
+}
+.comment-form button:hover {
+    background-color: var(--primary-dark);
+}
+
+/* --- 3. تصميم كل تعليق على حدة --- */
+.comments-list .comment {
+    display: flex;
+    gap: 1rem;
+    padding: 1.2rem;
+    background-color: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    margin-bottom: 1rem;
+}
+.comment-avatar {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+.comment-content {
+    flex-grow: 1;
+}
+.comment-author {
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.3rem;
+}
+.comment-date {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-left: 0.5rem;
+}
+.comment-text {
+    line-height: 1.7;
+}
+
+
+/* ========================================================== */
+/* ===         إصلاح نهائي للفراغ بعد السلايدر          === */
+/* ========================================================== */
+
+/* 1. القاعدة الأساسية للمحتوى (تبقى كما هي) */
+.main-content {
+    padding-top: var(--header-height);
+    min-height: 100vh;
+}
+
+/* 2. الأهم: إلغاء المسافة العلوية للمحتوى بالكامل إذا جاء بعد السلايدر */
+
+/* 3. إعادة تصميم المسافات لقسم Hero ليكون متناسقاً */
+.hero {
+    padding-top: 4rem; /* مسافة داخلية أنيقة من الأعلى */
+    padding-bottom: 2rem; /* مسافة داخلية أقل من الأسفل */
+}
+
+/* =================================================================== */
+/* === الكود الإضافي والنهائي للتصميم المتجاوب (Mobile Fix) === */
+/* =================================================================== */
+
+/* --- شاشات التابلت والموبايلات الكبيرة (عرض 992 بكسل أو أقل) --- */
+@media (max-width: 992px) {
+    .container {
+        padding: 0 1.5rem;
+    }
+
+    /* إصلاح الهيدر: إخفاء الروابط والبحث، وإظهار زر القائمة */
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        grid-template-columns: none; /* إلغاء الشبكة */
+    }
+    .header .nav, .header-left {
+        display: none;
+    }
+    .menu-toggle {
+    display: flex !important; /* <-- الأهم: إجباره على الظهور */
+    flex-direction: column;
+    justify-content: space-around;
+    width: 28px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 2001;
+}
+
+.menu-toggle span {
+    width: 100%;
+    height: 3px;
+    background-color: var(--text-primary);
+    border-radius: 2px;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    transform-origin: center;
+}
+
+/* حركة التحول إلى (X) عند فتح القائمة */
+body.sidebar-open .menu-toggle span:nth-child(1) {
+    transform: translateY(10.5px) rotate(45deg);
+}
+body.sidebar-open .menu-toggle span:nth-child(2) {
+    opacity: 0;
+}
+body.sidebar-open .menu-toggle span:nth-child(3) {
+    transform: translateY(-10.5px) rotate(-45deg);
+}
+    .header-center {
+        order: -1; /* وضع الشعار على اليمين في RTL */
+        justify-self: start;
+    }
+    .site-name-center .logo {
+        font-size: 1.3rem;
+    }
+
+    /* إصلاح الفراغات */
+    .featured-slider + .main-content {
+        padding-top: 2rem;
+    }
+    .section-container {
+        margin-bottom: 2.5rem;
+    }
+    .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    /* إخفاء أزرار التمرير في الأقسام الأفقية */
+    .horizontal-scroll-btn {
+        display: none;
+    }
+    .programs-horizontal-container {
+        padding: 0;
+        margin: 0;
+    }
+}
+
+/* --- شاشات الموبايل المتوسطة والصغيرة (عرض 768 بكسل أو أقل) --- */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    /* تعديل السلايدر */
+    .featured-slider {
+        height: 55vh;
+        min-height: 350px;
+    }
+    .slide-title {
+        font-size: 2.2rem;
+    }
+    .slide-description {
+        font-size: 1rem;
+    }
+    .slider-btn { /* أزرار الأسهم */
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    .prev-btn { left: 15px; }
+    .next-btn { right: 15px; }
+
+    /* تعديل حجم البطاقات */
+    .programs-horizontal-wrapper .card {
+        width: 140px;
+    }
+    .programs-grid .card {
+        /* (الكود الأصلي الخاص بك متوافق بالفعل) */
+    }
+    
+    /* إصلاح الفوتر */
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .social-links, .footer-logo {
+        justify-content: center;
+    }
+}
+
+/* --- شاشات الموبايل الصغيرة جدًا (عرض 480 بكسل أو أقل) --- */
+@media (max-width: 480px) {
+    .slide-title {
+        font-size: 1.8rem;
+    }
+    .slide-description {
+        font-size: 0.9rem;
+    }
+    .programs-horizontal-wrapper .card {
+        width: 120px;
+    }
+    .programs-grid {
+        /* (الكود الأصلي الخاص بك متوافق بالفعل) */
+    }
+}
+
+/* ========================================================== */
+/* === التصميم الجديد للموبايل (شريط سفلي وتأثيرات) V-FINAL === */
+/* ========================================================== */
+
+/* --- إخفاء الشريط على شاشات الكمبيوتر --- */
+.mobile-tab-bar {
+    display: none;
+}
+
+/* --- تفعيل التصميم الجديد فقط على شاشات الموبايل --- */
+/* ========================================================== */
+/* ===   التصميم الاحترافي لشريط الموبايل (مع المؤشر السحري)   === */
+/* ========================================================== */
+
+/* --- إخفاء الشريط على شاشات الكمبيوتر --- */
+.mobile-tab-bar {
+    display: none;
+}
+
+/* --- تفعيل التصميم الجديد فقط على شاشات الموبايل --- */
+/* ========================================================== */
+/* ===    الكود النهائي والمضمون 100% لتصميم الموبايل     === */
+/* ========================================================== */
+@media (max-width: 768px) {
+
+    /* --- 1. إصلاح الهيكل العام للصفحة --- */
+    body {
+        padding-bottom: 70px; /* مساحة للشريط السفلي */
+    }
+    
+    /* إلغاء تصميم الكمبيوتر بالكامل في الموبايل */
+    .page-wrapper.container {
+        display: block !important;
+        padding: 0 1rem !important; /* مسافات جانبية بسيطة */
+    }
+
+    /* --- 2. إظهار الهيدر وإعادة تصميمه للموبايل --- */
+    .header {
+        display: block !important;
+        background: var(--bg-primary); /* خلفية صلبة */
+        position: static; /* إلغاء التثبيت */
+    }
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    /* إخفاء العناصر غير الضرورية في الهيدر */
+    .header .header-center, .header .header-left {
+        display: none !important;
+    }
+    
+    /* إظهار زر القائمة (☰) وتصميمه */
+    .header .menu-toggle {
+        display: flex !important;
+    }
+    
+    /* --- 3. إظهار وتصميم الشريط السفلي --- */
+    .mobile-tab-bar {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        height: 70px;
+        background: rgba(31, 41, 55, 0.9);
+        backdrop-filter: blur(15px);
+        border-top: 1px solid var(--border-color);
+        z-index: 1000;
+        transition: transform 0.4s ease;
+    }
+    .mobile-tab-bar.hidden-by-sidebar {
+        transform: translateY(100px);
+    }
+    .tab-item {
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center;
+        gap: 4px; text-decoration: none;
+        color: var(--text-secondary);
+        font-size: 0.7rem; font-weight: 500;
+        transition: all 0.4s ease;
+    }
+    .tab-item i { font-size: 1.5rem; }
+    .tab-item.active {
+        color: var(--primary-color);
+        transform: translateY(-5px);
+    }
+    .tab-item.active::after {
+        content: ''; position: absolute; bottom: 5px;
+        width: 6px; height: 6px;
+        background-color: var(--primary-color);
+        border-radius: 50%;
+    }
+    
+    /* --- 4. تعديل عرض البطاقات في الموبايل --- */
+    .programs-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+}
+@keyframes fadeInPage {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+body {
+    /* تطبيق الأنيميشن على الصفحة عند تحميلها */
+    animation: fadeInPage 0.5s ease-in-out forwards;
+}
+
+/* ===================================================================== */
+/* === التصميم الجديد للبطاقات الأفقية (شبيه بتصميم شاهد) V-FINAL === */
+/* ===================================================================== */
+
+/* --- تحديد الأقسام المستهدفة --- */
+#newProgramsGrid .card,
+#topGamesGrid .card,
+#topSoftwareGrid .card {
+    /* تغيير حجم البطاقة لتكون مستطيلة (شكل بوستر) */
+    width: 110px;       /* عرض أصغر */
+    height: 210px;      /* ارتفاع أكبر للحفاظ على النسبة */
+    
+    /* إلغاء تأثير التوهج الملون */
+    background-image: none;
+    
+    /* إضافة إطار بسيط وأنيق */
+    background-color: transparent;
+    border: 1px solid rgba(129, 140, 162, 0.2); /* إطار شبه شفاف */
+    
+    border-radius: 12px; /* حواف دائرية أقل */
+    overflow: hidden; /* مهم جداً لقص زوائد الصورة */
+}
+/* ===================================================================== */
+/* === التصميم الجذري والنهائي للبطاقات الأفقية (باستخدام !important) === */
+/* ===================================================================== */
+
+/* --- استهداف البطاقات في الأقسام الأفقية للصفحة الرئيسية --- */
+#newProgramsGrid .card,
+#topGamesGrid .card,
+#topSoftwareGrid .card {
+    /* تغيير الحجم بالقوة */
+    width: 135px !important;
+    height: 200px !important;
+    
+    /* إلغاء أي تأثيرات قديمة بالقوة */
+    background-image: none !important;
+    background-color: transparent !important;
+    border: 1px solid rgba(129, 140, 162, 0.2) !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    
+    /* التأكد من أن البطاقة نفسها لا تأخذ مساحة إضافية */
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* استهداف البطاقة الداخلية */
+#newProgramsGrid .card2,
+#topGamesGrid .card2,
+#topSoftwareGrid .card2 {
+    border-radius: 12px !important;
+    background-color: var(--bg-card) !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* استهداف الصورة */
+#newProgramsGrid .card-image,
+#topGamesGrid .card-image,
+#topSoftwareGrid .card-image {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+/* تأثير بسيط عند مرور الماوس */
+#newProgramsGrid .card:hover,
+#topGamesGrid .card:hover,
+#topSoftwareGrid .card:hover {
+    transform: scale(1.05) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3) !important;
+}
+
+/* تعديل المسافات بين البطاقات */
+.programs-horizontal-wrapper {
+    gap: 1rem !important;
+}
+
+/* كلاس لإخفاء الشريط السفلي عند فتح القائمة الجانبية */
+.mobile-tab-bar.hidden-by-sidebar {
+    transform: translateY(100px); /* حركه للأسفل بمقدار 100 بكسل ليختفي */
+}
+
+/* ========================================================================= */
+/* ===      التصميم النهائي والمبسط 100% للقائمة الجانبية      === */
+/* ========================================================================= */
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- التصميم الرئيسي للقائمة (النسخة النهائية والمصححة) --- */
+.sidebar {
+    /* === الخصائص الجديدة والمهمة === */
+    position: fixed; /* يجعلها عائمة فوق كل شيء */
+    top: 0;          /* تبدأ من أعلى الشاشة */
+    height: 100%;    /* تأخذ كامل ارتفاع الشاشة */
+    
+    /* الخصائص القديمة (مع التأكد من المسار الصحيح) */
+    right: -300px; /* تبدأ مخفية على اليمين (لـ RTL) */
+    width: 280px;
+    z-index: 2000;
+    transition: right 0.4s cubic-bezier(0.7, 0, 0.2, 1);
+    
+    /* بقية خصائص التصميم تبقى كما هي */
+    background: rgba(26, 26, 46, 0.9);
+    backdrop-filter: blur(15px);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* يجب أيضاً تعديل كود الحالة النشطة */
+body.sidebar-open .sidebar {
+    right: 0; /* تظهر من اليمين */
+}
+
+/* ولغات LTR (إذا كنت تدعمها) */
+html[dir="ltr"] .sidebar {
+    right: auto;
+    left: -300px;
+    transition: left 0.4s cubic-bezier(0.7, 0, 0.2, 1);
+}
+html[dir="ltr"] body.sidebar-open .sidebar {
+    left: 0;
+}
+
+.sidebar-header {
+    padding: 1rem 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+.sidebar-header .logo { gap: 0.8rem; }
+.sidebar .sidebar-close-btn {
+    font-size: 1.5rem; color: var(--text-secondary);
+    background: none; border: none; cursor: pointer;
+    transition: all 0.3s ease;
+}
+.sidebar .sidebar-close-btn:hover { color: white; transform: rotate(90deg); }
+
+.sidebar-nav {
+    padding: 1rem 0.8rem;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+.nav-item { margin-bottom: 0.5rem; }
+.nav-item > a {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 1rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+.nav-item > a:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-primary);
+}
+.nav-item > a.active {
+    background: var(--primary-color);
+    color: white;
+    box-shadow: 0 5px 15px rgba(99, 102, 241, 0.25);
+}
+.sidebar-nav .nav-item span {
+    opacity: 0;
+    animation-fill-mode: forwards;
+    flex-grow: 1;
+    text-align: right;
+}
+
+/* --- الفوتر (الثيم واللغة) --- */
+.sidebar-footer {
+    padding: 1rem 1.2rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: auto;
+    flex-shrink: 0;
+}
+/* التصميم الطويل لزر الثيم */
+.sidebar-footer .theme-switch {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--bg-secondary);
+    border-radius: 50px;
+    padding: 6px;
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 1rem; /* مسافة بينه وبين أزرار اللغة */
+}
+.theme-switch i {
+    font-size: 1.1rem;
+    width: 28px;
+    text-align: center;
+    color: var(--text-secondary);
+    z-index: 2;
+    transition: color 0.3s ease;
+}
+.theme-switch-toggle {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    left: 6px;
+    transition: left 0.4s cubic-bezier(0.7, 0, 0.2, 1);
+    z-index: 1;
+}
+body:not(.light-mode) .theme-switch-toggle {
+    left: calc(100% - 28px - 6px); /* يتحرك لليمين */
+}
+body:not(.light-mode) .theme-switch i.fa-moon { color: white; }
+body.light-mode .theme-switch i.fa-sun { color: #f59e0b; }
+
+.sidebar-lang {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+}
+.sidebar-lang .lang-btn {
+    padding: 0.6rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+    text-align: center;
+    transition: all 0.2s ease;
+}
+.sidebar-lang .lang-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--text-primary);
+}
+.sidebar-lang .lang-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+
+.card {
+    position: relative; /* ضروري لعمل التأثير */
+}
+.card:hover::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 255, 255, 0) 25%);
+    border-radius: inherit; /* ليتناسب مع حواف البطاقة */
+    z-index: 3;
+}
+
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+    background-size: 200% 200%;
+    animation: gradientShift 4s ease infinite;
+    z-index: 1001; /* فوق الهيدر */
+}
+
+/* ========================================================================= */
+/* ===      التصميم الجديد المزدحم والمبهر للصفحة الرئيسية      === */
+/* ========================================================================= */
+
+/* --- 1. تصميم الـ Hero Grid --- */
+.hero-grid-section {
+    padding: 2rem 0;
+}
+.hero-grid-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* السلايدر يأخذ ثلثي العرض، والقائمة الجانبية الثلث */
+    gap: 1.5rem;
+    height: 450px; /* ارتفاع ثابت للقسم العلوي */
+}
+.hero-main-panel, .hero-side-panel {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+.hero-side-panel {
+    display: flex;
+    flex-direction: column;
+}
+.side-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.2rem;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+.side-panel-header h3 { font-size: 1.1rem; margin: 0; }
+.side-panel-header a { color: var(--primary-color); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
+
+.side-panel-list {
+    padding: 0.5rem;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+.side-program-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+.side-program-item:hover { background-color: var(--bg-card); }
+.side-program-item img { width: 45px; height: 60px; object-fit: cover; border-radius: var(--radius-sm); flex-shrink: 0; }
+.side-program-info h4 { font-size: 0.9rem; color: var(--text-primary); margin: 0 0 4px 0; }
+.side-program-info span { font-size: 0.8rem; color: var(--text-secondary); }
+
+/* --- 2. تصميم قسم الفئات المميزة --- */
+.featured-categories-section { padding: 2rem 0; }
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+.category-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+}
+.category-card:hover {
+    transform: translateY(-5px);
+    background: var(--primary-color);
+    color: white;
+    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
+}
+.category-card i { font-size: 2.5rem; }
+.category-card span { font-weight: 600; }
+
+
+/* --- 3. تعديل حجم البطاقات الأفقية لإعطاء إحساس بالازدحام --- */
+.programs-horizontal-wrapper {
+    /* (إذا كان هذا الكود موجوداً بالفعل، تأكد من تعديله) */
+    gap: 1rem;
+}
+.programs-horizontal-wrapper .card {
+    width: 140px;
+    height: 210px;
+    border-radius: 12px;
+}
+.programs-horizontal-wrapper .card2 { border-radius: 12px; }
+
+/* ========================================================== */
+/* ===     التصميم الخاص بتأثير الجسيمات العائمة        === */
+/* ========================================================== */
+
+#particles-js {
+    position: fixed; /* الأهم: تثبيت الخلفية لتغطي الشاشة كلها */
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1; /* الأهم: اجعلها خلف كل محتوى الموقع */
+    background-color: var(--bg-primary); /* نفس لون خلفيتك */
+}
+
+.header::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: radial-gradient(
+        800px circle at var(--mouse-x, 0) var(--mouse-y, 0), 
+        rgba(148, 163, 184, 0.06), 
+        transparent 40%
+    );
+    z-index: -1;
+}
+
+
+/* ========================================================== */
+/* ===            تأثير التوهج النابض للأزرار            === */
+/* ========================================================== */
+.pulsating-glow {
+    box-shadow: 0 0 0 0 rgba(var(--primary-color-rgb), 0.7);
+    animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(var(--primary-color-rgb), 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(var(--primary-color-rgb), 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(var(--primary-color-rgb), 0);
+    }
+}
+
+
+/* ========================================================== */
+/* ===         التصميم الجديد للهيدر التفاعلي          === */
+/* ========================================================== */
+
+/* --- 1. الحالة الأساسية للهيدر (في أعلى الصفحة) --- */
+.header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    
+    /* ارتفاع أكبر في البداية */
+    height: 90px; 
+    
+    /* شفاف في البداية */
+    background-color: transparent;
+    border-bottom-color: transparent;
+    
+    /* حركة ناعمة لكل الخصائص */
+    transition: height 0.4s ease, background-color 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
+}
+
+.header-content {
+    height: 100%; /* اجعل المحتوى يملأ ارتفاع الهيدر */
+}
+
+/* الشعار الكبير يكون ظاهراً، والصغير مخفياً */
+.large-logo { opacity: 1; transform: scale(1); }
+.small-logo { opacity: 0; transform: scale(0.8); position: absolute; } /* absolute لمنعه من أخذ مساحة */
+
+/* --- 2. الحالة الثانية: عند التمرير للأسفل (scrolled) --- */
+.header.scrolled {
+    height: var(--header-height); /* يعود للارتفاع الأصغر */
+    background-color: rgba(15, 15, 35, 0.85);
+    backdrop-filter: blur(15px);
+    border-bottom-color: var(--border-color);
+}
+
+/* إخفاء الشعار الكبير وإظهار الصغير */
+.header.scrolled .large-logo {
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none; /* لمنعه من أن يكون قابلاً للنقر وهو مخفي */
+}
+.header.scrolled .small-logo {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* --- 3. التأثيرات الانتقالية --- */
+.large-logo, .small-logo {
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+
+/* --- 4. تصميم الموبايل (يبقى كما هو) --- */
+@media (max-width: 992px) {
+    .header .large-logo { 
+        display: none; /* إخفاء الشعار الكبير بالكامل في الموبايل */
+    }
+    .header .small-logo { 
+        opacity: 1; 
+        transform: scale(1);
+        position: static; /* إعادته لوضعه الطبيعي */
+    }
+    .header, .header.scrolled {
+        height: var(--header-height); /* الارتفاع ثابت في الموبايل */
+        background-color: var(--bg-primary);
+        backdrop-filter: none;
+    }
+    .header-center {
+        justify-content: flex-start;
+        flex-grow: 0;
+    }
+}
+
+
+/* ========================================================== */
+/* ===       التصميم الجديد المتكامل للأقسام V-FINAL      === */
+/* ========================================================== */
+
+.content-section-wrapper {
+    background: transparent; /* الخلفية شفافة */
+    border: 2px solid var(--border-color); /* إطار أكثر سماكة */
+    border-radius: var(--radius-xl); /* حواف دائرية واضحة */
+    padding: 0; /* لا يوجد padding خارجي */
+    margin-bottom: 3rem;
+    overflow: hidden; /* مهم لقص الحواف الدائرية للمحتوى الداخلي */
+}
+
+.section-header-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-secondary); /* خلفية الهيدر الخاص بالقسم */
+    padding: 1.2rem 2rem;
+    /* لا يوجد خط سفلي، لأنه جزء من الصندوق */
+}
+
+.section-header-box .section-title {
+    font-size: 1.6rem;
+    margin: 0;
+    padding: 0;
+    border: none; /* إزالة أي خطوط قديمة */
+    text-align: right;
+}
+.section-header-box .section-title::after {
+    display: none; /* إزالة الخط الملون القديم تحت العنوان */
+}
+
+.see-more-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+.see-more-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.programs-horizontal-container {
+    padding: 2rem 50px; /* مسافة داخلية للمحتوى */
+    margin: 0 -50px; /* تعويض المسافة لأزرار التمرير */
+    position: relative;
+}
+
+
+/* ========================================================================= */
+/* ===         الكود النهائي لتصميم البطاقات والأشرطة الأفقية          === */
+/* ========================================================================= */
+
+/* --- 1. التصميم العام للبطاقات (في صفحات الألعاب والبرامج) --- */
+.programs-grid .card {
+    width: 190px;
+    height: 254px;
+    background-image: none;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    transition: all .3s;
+    cursor: pointer;
+}
+.programs-grid .card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+.programs-grid .card2 {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.programs-grid .card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* --- 2. التصميم الخاص والحصري للبطاقات داخل الأشرطة الأفقية (الصفحة الرئيسية) --- */
+.programs-horizontal-wrapper .card {
+    /* الأبعاد الجديدة */
+    width: 140px !important;
+    height: 210px !important;
+    flex-shrink: 0 !important;
+    
+    /* التصميم الجديد */
+    border-radius: 12px !important;
+    border: 1px solid rgba(129, 140, 162, 0.2) !important;
+    background: var(--bg-card) !important; /* تأكيد الخلفية */
+    padding: 0 !important; /* إلغاء أي مسافات داخلية */
+}
+.programs-horizontal-wrapper .card2 {
+    border-radius: 12px !important;
+}
+.programs-horizontal-wrapper .card:hover {
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3) !important;
+    transform: scale(1.05) !important;
+}
+
+/* --- 3. تصميم حاوية الأشرطة الأفقية وأزرار التمرير --- */
+.programs-horizontal-container {
+    position: relative;
+    padding: 0 50px;
+}
+.programs-horizontal-wrapper {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 1rem 0.5rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.programs-horizontal-wrapper::-webkit-scrollbar { display: none; }
+
+/* --- تصميم أزرار التمرير (الأسهم) --- */
+.horizontal-scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(30, 30, 63, 0.8);
+    backdrop-filter: blur(5px);
+    border: 1px solid var(--border-color);
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    
+    /* تأكد من أنها ظاهرة */
+    opacity: 1;
+    visibility: visible;
+}
+
+.horizontal-scroll-btn:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.horizontal-scroll-btn.prev {
+    left: 0px; /* ستظهر الآن في المساحة الفارغة على اليسار */
+}
+
+.horizontal-scroll-btn.next {
+    right: 0px; /* ستظهر الآن في المساحة الفارغة على اليمين */
+}
+
+/* ========================================================================= */
+/* ===  الكود النهائي والمضمون 100% لتصميم الصفحة الرئيسية (كمبيوتر وموبايل) === */
+/* ========================================================================= */
+
+/* --- 1. تصميم الـ Hero Grid (للكمبيوتر) --- */
+.hero-grid-section {
+    padding: 2rem 0;
+}
+.hero-grid-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+    height: 450px;
+}
+.hero-main-panel, .hero-side-panel {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+.hero-side-panel {
+    display: flex; flex-direction: column;
+}
+.side-panel-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 1.2rem;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+.side-panel-header h3 { font-size: 1.1rem; margin: 0; }
+.side-panel-header a { color: var(--primary-color); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
+.side-panel-list { padding: 0.5rem; overflow-y: auto; flex-grow: 1; }
+.side-program-item { display: flex; align-items: center; gap: 1rem; padding: 0.8rem; border-radius: var(--radius-md); text-decoration: none; transition: background-color 0.2s ease; }
+.side-program-item:hover { background-color: var(--bg-card); }
+.side-program-item img { width: 45px; height: 60px; object-fit: cover; border-radius: var(--radius-sm); flex-shrink: 0; }
+.side-program-info h4 { font-size: 0.9rem; color: var(--text-primary); margin: 0 0 4px 0; }
+.side-program-info span { font-size: 0.8rem; color: var(--text-secondary); }
+
+/* --- 2. السلايدر داخل الـ Hero Grid --- */
+.hero-main-panel .featured-slider { height: 100%; }
+.featured-slider { position: relative; width: 100%; height: 100%; overflow: hidden; }
+.slider-container { position: relative; width: 100%; height: 100%; }
+.slider-wrapper { display: flex; height: 100%; transition: transform 0.8s ease; }
+.slider-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 1s ease; z-index: 1; }
+.slider-slide.active { opacity: 1; z-index: 2; }
+.slider-slide::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to top, rgba(15, 15, 35, 0.7) 0%, rgba(15, 15, 35, 0) 60%); z-index: 3; }
+.slide-content { position: relative; z-index: 4; text-align: center; color: white; padding: 2rem; max-width: 80%; }
+.slide-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
+.slide-description { font-size: 1rem; margin-bottom: 1.5rem; color: var(--text-secondary); }
+.slide-btn { /* (تصميم الزر الأصفر يبقى كما هو) */ }
+.slider-dots { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 5; }
+.slider-dot { width: 10px; height: 10px; background: rgba(255,255,255,0.4); border-radius: 50%; cursor: pointer; transition: all 0.3s ease; }
+.slider-dot.active { background: white; width: 25px; border-radius: 5px; }
+.slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.3); border: none; color: white; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; z-index: 5; }
+.prev-btn { left: 20px; } 
+.next-btn { right: 20px; }
+
+/* --- 3. تصميم الموبايل (الأهم) --- */
+@media (max-width: 992px) {
+    /* تحويل الشبكة إلى عمود واحد */
+    .hero-grid-container {
+        grid-template-columns: 1fr;
+        height: auto; /* ارتفاع تلقائي */
+    }
+    
+    /* جعل السلايدر يأخذ كامل العرض */
+    .hero-main-panel {
+        height: 45vh; /* ارتفاع مناسب للموبايل */
+        min-height: 350px;
+    }
+
+    /* تعديل حجم الخطوط في السلايدر */
+    .slide-title { font-size: 1.8rem; }
+    .slide-description { font-size: 0.9rem; }
+
+    /* جعل القائمة الجانبية أسفل السلايدر */
+    .hero-side-panel {
+        height: auto;
+        max-height: 400px; /* ارتفاع أقصى مع شريط تمرير */
+    }
+}
+
+
+/* ========================================================== */
+/* === تصميم نافذة اكتشاف مانع الإعلانات (Anti-AdBlock) === */
+/* ========================================================== */
+
+#adblock-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 15, 35, 0.9); /* خلفية داكنة جداً */
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    display: none; /* مخفية افتراضياً */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem;
+}
+
+#adblock-modal {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    max-width: 500px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
+
+.adblock-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    background-color: rgba(var(--error-color-rgb, 239, 68, 68), 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.adblock-icon i {
+    font-size: 2.5rem;
+    color: var(--error-color);
+}
+
+#adblock-modal h2 {
+    font-size: 1.8rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+#adblock-modal p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+}
+
+#adblock-refresh-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#adblock-refresh-btn:hover {
+    background: var(--primary-dark);
+}
+
+.adsbox { opacity: 0; pointer-events: none; }
+
+
+/* ========================================================== */
+/* ===        التصميم الموحد لزر التحميل البسيط        === */
+/* ========================================================== */
+
+.download-btn-simple {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    padding: 1rem 2.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.download-btn-simple:hover {
+    background-color: var(--primary-dark);
+    transform: scale(1.05);
+}
+
+/* حالة التعطيل */
+.download-btn-simple.disabled,
+.download-btn-simple.disabled-after-click {
+    background-color: #555;
+    cursor: not-allowed;
+    opacity: 0.7;
+    transform: none;
+}

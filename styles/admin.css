@@ -1,0 +1,860 @@
+/* ===================================================================== */
+/* === الكود الكامل والنهائي لملف styles/admin.css (مع كل الإصلاحات) === */
+/* ===================================================================== */
+@font-face {
+    font-family: 'KurdinFont';
+    src: url('../fonts/NRT-Reg.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+
+
+
+
+
+:root {
+    --primary-color: #6366f1; --secondary-color: #8b5cf6; --bg-primary: #111827;
+    --bg-secondary: #1f2937; --bg-card: #374151; --text-primary: #ffffff;
+    --text-secondary: #afb5c0; --border-color: #4b5563; --radius-xl: 1rem;
+    --radius-lg: 0.75rem; --radius-md: 0.5rem; --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --blue: #3b82f6; --green: #10b981; --purple: #8b5cf6;
+}
+
+.admin-body { color: white !important; background: var(--bg-primary );  font-family: 'KurdinFont', sans-serif; }
+body.modal-active { overflow: hidden; }
+
+/* --- قسم تسجيل الدخول --- */
+.login-section { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--bg-primary); }
+.login-container { background: var(--bg-secondary); border-radius: var(--radius-xl); padding: 2rem 3rem; width: 100%; max-width: 400px; border: 1px solid var(--border-color); }
+.login-header { text-align: center; margin-bottom: 2rem; }
+.login-form { display: flex; flex-direction: column; gap: 1.5rem; }
+.form-group label { display: block; margin-bottom: 0.75rem; font-weight: 600; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.8rem 1rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--radius-md); color: var(--text-primary); transition: all 0.2s ease; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--primary-color); box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2); outline: none; }
+.login-btn, .btn-primary { background: var(--primary-color); color: white; border: none; padding: 0.8rem 2rem; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; transition: background-color 0.2s ease; font-size: 1rem; }
+.login-btn:hover, .btn-primary:hover { background-color: #4f46e5; }
+
+
+/* --- لوحة التحكم --- */
+.admin-dashboard { display: grid; grid-template-columns: 260px 1fr; grid-template-rows: 65px 1fr; grid-template-areas: "sidebar header" "sidebar main"; min-height: 100vh; }
+.admin-dashboard.hidden { display: none; }
+.admin-header { grid-area: header; background: var(--bg-secondary); padding: 0 2rem; display: flex; justify-content: flex-end; align-items: center; border-bottom: 1px solid var(--border-color); }
+.admin-sidebar { grid-area: sidebar; background: var(--bg-secondary); border-left: 1px solid var(--border-color); padding: 1.5rem; display: flex; flex-direction: column; }
+.admin-logo { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); text-align: center; padding: 1rem 0; margin-bottom: 1.5rem; }
+.logout-btn { background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-primary); cursor: pointer; padding: 0.5rem 1rem; border-radius: var(--radius-md); font-weight: 600; display: flex; align-items: center; gap: 0.5rem; transition: background-color 0.2s ease; }
+.logout-btn:hover { background-color: #4b5563; }
+.admin-nav .nav-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.admin-nav .nav-link { display: flex; align-items: center; gap: 1rem; padding: 1rem; color: var(--text-secondary); text-decoration: none; border-radius: var(--radius-md); font-weight: 600; transition: all 0.2s ease; }
+.admin-nav .nav-link i { font-size: 1.1rem; width: 20px; text-align: center; }
+.admin-nav .nav-link:hover { background: var(--bg-card); color: var(--text-primary); }
+.admin-nav .nav-link.active { background: var(--primary-color); color: white; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); }
+.admin-main { grid-area: main; padding: 2.5rem; overflow-y: auto; background-color: var(--bg-primary); }
+.section-header { margin-bottom: 2rem; }
+.section-header h1 { font-size: 2rem; font-weight: 700; }
+.admin-section { display: none; }
+.admin-section.active { display: block; animation: fadeIn 0.5s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- بطاقات الإحصائيات --- */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
+.stat-card { background: var(--bg-secondary); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; align-items: center; gap: 1.5rem; border: 1px solid var(--border-color); transition: all 0.3s ease; }
+.stat-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: var(--primary-color); }
+.stat-icon { font-size: 1.5rem; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0; }
+.stat-card.blue .stat-icon { background: var(--blue); } .stat-card.green .stat-icon { background: var(--green); } .stat-card.purple .stat-icon { background: var(--purple); }
+.stat-details { display: flex; flex-direction: column; } .stat-title { color: var(--text-secondary); font-weight: 600; margin-bottom: 0.25rem; } .stat-number { color: var(--text-primary); font-size: 2rem; font-weight: 700; }
+
+/* --- شبكة لوحة التحكم (الرسم البياني وأحدث البرامج) --- */
+.dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.chart-container, .recent-programs { background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 1.5rem; border-radius: var(--radius-lg); }
+.chart-container h3, .recent-programs h3 { font-size: 1.25rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
+#recentProgramsList { list-style: none; padding: 0; } #recentProgramsList li { display: flex; align-items: center; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border-color); } #recentProgramsList li:last-child { border-bottom: none; }
+#recentProgramsList img { width: 40px; height: 40px; border-radius: var(--radius-md); object-fit: cover; }
+#recentProgramsList .program-info { display: flex; flex-direction: column; } #recentProgramsList .program-title { font-weight: 600; } #recentProgramsList .program-category { font-size: 0.8rem; color: var(--text-secondary); }
+
+/* --- الجداول --- */
+.programs-table-container { background: var(--bg-secondary); border-radius: var(--radius-lg); overflow-x: auto; border: 1px solid var(--border-color); margin-top: 1.5rem; }
+.programs-table { width: 100%; border-collapse: collapse; }
+.programs-table th, .programs-table td { padding: 1rem 1.5rem; text-align: right; border-bottom: 1px solid var(--border-color); white-space: nowrap; vertical-align: middle; }
+.programs-table thead { background: #374151; } .programs-table th { font-weight: 600; }
+.programs-table tbody tr:hover { background-color: var(--bg-card); }
+.programs-table img { width: 45px; height: 45px; border-radius: var(--radius-md); object-fit: cover; }
+.action-btn { border: none; padding: 0.5rem 0.8rem; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; transition: opacity 0.2s ease; }
+.action-btn.edit { background-color: var(--blue); color: white; } .action-btn.delete { background-color: #ef4444; color: white; }
+.action-btn:hover { opacity: 0.8; }
+
+/* --- قسم الفلاتر والبحث --- */
+.program-filters { display: flex; justify-content: flex-end; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; }
+.search-container { position: relative; width: 100%; max-width: 400px; }
+.search-container input { width: 100%; padding: 0.8rem 2.5rem 0.8rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); color: var(--text-primary); font-size: 1rem; }
+.search-container i { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary); }
+.main-filters { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.sub-filters-container { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; background-color: var(--bg-secondary); border-radius: var(--radius-lg); padding: 1rem; }
+.filter-btn, .sub-filter-btn { background-color: var(--bg-card); color: var(--text-secondary); border: 1px solid var(--border-color); padding: 0.6rem 1.2rem; border-radius: var(--radius-md); font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+.filter-btn:hover, .sub-filter-btn:hover { background-color: var(--primary-color); color: white; border-color: var(--primary-color); }
+.filter-btn.active, .sub-filter-btn.active { background-color: var(--primary-color); color: white; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); border-color: var(--primary-color); }
+
+/* --- النماذج (Forms) --- */
+.add-program-form, .modal-form { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 2rem; }
+.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+.form-actions { display: flex; justify-content: flex-end; margin-top: 1.5rem; }
+
+/* --- النافذة المنبثقة (Modal) --- */
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: flex-start; justify-content: center; z-index: 1000; overflow-y: auto; padding: 3rem 1rem; }
+.modal-overlay.active { display: flex; }
+.modal-content { background: var(--bg-secondary); border-radius: var(--radius-xl); max-width: 800px; width: 100%; border: 1px solid var(--border-color); margin: auto; display: flex; flex-direction: column; max-height: 90vh; }
+.modal-header { padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; background: var(--bg-secondary); z-index: 10; flex-shrink: 0; }
+.modal-close-btn { background: none; border: none; font-size: 1.5rem; color: var(--text-secondary); cursor: pointer; }
+.modal-form { border: none; overflow-y: auto; padding: 2rem; }
+.form-actions { flex-shrink: 0; position: sticky; bottom: 0; background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 1rem 2rem; margin: 1.5rem -2rem -2rem -2rem; border-radius: 0 0 var(--radius-lg) var(--radius-lg); }
+
+/* --- قسم التحليلات --- */
+.ga-info-box { background-color: rgba(59, 130, 246, 0.1); border: 1px solid var(--blue); color: #bfdbfe; padding: 1rem 1.5rem; border-radius: var(--radius-lg); display: flex; align-items: center; gap: 1rem; margin-bottom: 2.5rem; }
+.ga-info-box i { font-size: 1.5rem; color: var(--blue); }
+#topProgramsTableBody .rank-cell { font-weight: 700; font-size: 1.2rem; color: var(--text-primary); }
+#topProgramsTableBody .downloads-cell { font-weight: 700; color: var(--green); }
+
+/* --- التصميم المتجاوب --- */
+@media (max-width: 992px) {
+    .admin-dashboard { grid-template-columns: 1fr; grid-template-areas: "header" "main"; }
+    .admin-sidebar { display: none; }
+    .dashboard-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+    .admin-main { padding: 1.5rem; }
+    .program-filters { flex-direction: column; align-items: stretch; }
+}
+
+/* ========================================================== */
+/* === تصميم احترافي لزر "مميز" (Toggle Switch) === */
+/* ========================================================== */
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none; /* لمنع تحديد النص عند الضغط */
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+/* إخفاء مربع الاختيار الأصلي */
+.checkbox-label input[type="checkbox"] {
+    display: none;
+}
+
+/* تصميم الجزء الخارجي للزر */
+.checkbox-label span::before {
+    content: '';
+    display: inline-block;
+    width: 44px; /* عرض الزر */
+    height: 24px; /* ارتفاع الزر */
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px; /* لجعله دائري الأطراف */
+    transition: background-color 0.3s ease;
+    vertical-align: middle;
+    margin-left: 10px; /* مسافة بين النص والزر (في RTL) */
+}
+
+/* تصميم الدائرة الداخلية للزر */
+.checkbox-label span::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background-color: var(--text-secondary);
+    border-radius: 50%;
+    right: 30px; /* الموضع الأولي للدائرة (في RTL) */
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.3s ease;
+}
+
+/* عند تفعيل الخيار */
+.checkbox-label input[type="checkbox"]:checked + span::before {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.checkbox-label input[type="checkbox"]:checked + span::after {
+    background-color: white;
+    right: 6px; /* تحريك الدائرة إلى الجهة الأخرى (في RTL) */
+}
+
+.modal-body {
+    padding: 1.5rem 2rem;
+    color: var(--text-secondary);
+}
+.modal-body h4 {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+.selected-programs-list {
+    list-style: none;
+    padding: 0;
+    max-height: 200px; /* تحديد ارتفاع أقصى للقائمة */
+    overflow-y: auto; /* إضافة شريط تمرير عند الحاجة */
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+}
+.selected-programs-list li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.selected-programs-list li:last-child {
+    border-bottom: none;
+}
+.selected-programs-list img {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+}
+
+/* ========================================================== */
+/* === تصميم الفلاتر الإضافية داخل نافذة النقل === */
+/* ========================================================== */
+
+#moveProgramsModal .modal-body .form-group {
+    margin-top: 1rem; /* إضافة مسافة بين القوائم */
+}
+
+#moveProgramsModal .modal-body label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+#moveProgramsModal .modal-body select {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+}
+
+/* تصميم زر التعليقات الأخضر */
+.action-btn.comments {
+    background-color: var(--green); /* اللون الأخضر */
+    color: white;
+}
+
+/* تصميم قائمة التعليقات داخل النافذة */
+.comments-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.comment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.comment-item:last-child {
+    border-bottom: none;
+}
+.comment-details {
+    flex-grow: 1;
+}
+.comment-author {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+.comment-date {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-right: 10px;
+}
+.comment-text {
+    margin-top: 0.5rem;
+    color: var(--text-secondary);
+    white-space: normal; /* للسماح بعرض النص الطويل */
+}
+.comment-item .action-btn.delete {
+    flex-shrink: 0; /* لمنع الزر من التقلص */
+    margin-right: 15px;
+}
+
+/* ========================================================== */
+/* ===    تصميم مخصص لـ SweetAlert2 ليتناسب مع الثيم الداكن    === */
+/* ========================================================== */
+.swal2-popup {
+    background: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+    border-radius: var(--radius-lg) !important;
+}
+.swal2-title {
+    color: var(--text-primary) !important;
+}
+.swal2-html-container {
+    color: var(--text-secondary) !important;
+}
+.swal2-confirm {
+    background-color: var(--primary-color) !important;
+}
+.swal2-cancel {
+    background-color: var(--bg-card) !important;
+}
+.swal2-icon.swal2-success .swal2-success-line-tip,
+.swal2-icon.swal2-success .swal2-success-line-long {
+    background-color: var(--primary-color) !important;
+}
+
+
+/* تصميمات خاصة بقسم إدارة المقالات */
+#articles .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#articles .main-filters {
+    margin-bottom: 2rem;
+}
+#articles .filter-btn i {
+    margin-left: 8px;
+}
+
+/* تصميم صورة المستخدم الرمزية */
+.programs-table .user-avatar-cell img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.programs-table .user-avatar-cell .default-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: var(--bg-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+
+/* ============================================= */
+/* === تصميم شريط البحث المتقدم مع الفلاتر === */
+/* ============================================= */
+.advanced-search-container {
+    display: flex;
+    margin-bottom: 2rem;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    overflow: hidden; /* لضمان تناسق الحواف الدائرية */
+}
+
+/* تصميم حاوية قائمة الفلاتر */
+.advanced-search-container .search-filters {
+    position: relative;
+    border-left: 1px solid var(--border-color); /* خط فاصل */
+}
+.advanced-search-container .search-filters select {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    border: none;
+    padding: 0.9rem 3rem 0.9rem 1.5rem;
+    font-size: 1rem;
+    font-family: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    /* إخفاء سهم المتصفح الافتراضي */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.advanced-search-container .search-filters select:focus {
+    outline: none;
+}
+.advanced-search-container .search-filters i {
+    position: absolute;
+    right: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    pointer-events: none; /* لمنع الأيقونة من إعاقة النقر */
+}
+
+
+/* تصميم حقل البحث */
+.advanced-search-container .search-wrapper {
+    position: relative;
+    flex-grow: 1; /* جعل حقل البحث يملأ المساحة المتبقية */
+}
+.advanced-search-container .search-wrapper input {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    color: var(--text-primary);
+    padding: 0.9rem 1.5rem 0.9rem 3rem;
+    font-size: 1rem;
+}
+.advanced-search-container .search-wrapper input:focus {
+    outline: none;
+}
+.advanced-search-container .search-wrapper i {
+    position: absolute;
+    left: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+}
+
+
+/* ========================================================== */
+/* ===    تصميم محرر المقالات (V4 - Facebook Style)       === */
+/* ========================================================== */
+.modal-form {
+    padding: 0;
+}
+.modal-header {
+    text-align: center;
+    position: relative;
+    padding: 1rem;
+}
+.modal-header .modal-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px; /* RTL */
+    background: var(--bg-card);
+    width: 32px; height: 32px;
+    border-radius: 50%;
+}
+
+.article-editor-body-fb {
+    padding: 0.5rem 1rem;
+}
+
+/* معلومات الكاتب */
+.post-author-info {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+.post-author-info i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+}
+.post-author-info span {
+    font-weight: 600;
+}
+
+/* محرر النص */
+.article-content-textarea-fb {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    line-height: 1.5;
+    resize: none;
+}
+.article-content-textarea-fb:focus {
+    outline: none;
+}
+
+/* الفوتر وشريط الأدوات */
+.modal-footer {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.post-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+}
+.post-toolbar span {
+    font-weight: 500;
+}
+.tool-icons {
+    display: flex;
+    gap: 0.5rem;
+}
+.tool-icon-btn {
+    background: none; border: none; font-size: 1.5rem; cursor: pointer;
+    padding: 0.5rem;
+}
+
+/* زر النشر */
+.post-btn {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.post-btn:disabled {
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    cursor: not-allowed;
+}
+
+/* ========================================================== */
+/* ===         التصميم الخاص بقسم إدارة الموبايل         === */
+/* ========================================================== */
+
+.add-new-container {
+    margin-bottom: 2rem;
+}
+.add-new-btn {
+    width: 100%;
+    padding: 1.5rem;
+    background: var(--bg-secondary);
+    border: 2px dashed var(--border-color);
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+.add-new-btn:hover {
+    background: var(--bg-card);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* ====> ستايلات جديدة لشريط التقدم وزر الإلغاء <==== */
+#uploadProgressContainer {
+    width: 100%;
+    margin-top: 1rem;
+}
+.progress-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.progress-wrapper progress {
+    width: 100%;
+    height: 20px;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+.progress-wrapper progress::-webkit-progress-bar {
+    background-color: var(--bg-primary);
+}
+.progress-wrapper progress::-webkit-progress-value {
+    background-color: var(--green);
+    transition: width 0.3s ease;
+}
+.cancel-upload-btn {
+    position: absolute;
+    left: 8px; /* For RTL */
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--red);
+    color: white;
+    border: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#uploadProgressContainer span {
+    display: block;
+    text-align: center;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* ===================================================================== */
+/* ===   KURD DOWN - Mobile App Modal Design Upgrade (Add-on)        === */
+/* ===================================================================== */
+
+/* --- تكبير حجم النافذة المنبثقة للتصميم المنقسم --- */
+.modal-content.modal-lg {
+    max-width: 900px;
+}
+
+/* --- التصميم المنقسم (Split Form) --- */
+.split-form {
+    display: grid;
+    /* القسم الأيسر للصورة (أصغر)، والقسم الأيمن للحقول (أكبر) */
+    grid-template-columns: 300px 1fr; 
+    /* إزالة الـ padding من الفورم نفسه لوضعه في الأقسام الداخلية */
+    padding: 0; 
+}
+
+.form-left-panel {
+    background-color: var(--bg-primary); /* لون أغمق قليلاً للتمييز */
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    border-left: 1px solid var(--border-color); /* خط فاصل جميل */
+}
+
+.form-right-panel {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem; /* مسافة بين الحقول */
+    overflow-y: auto; /* إضافة شريط تمرير إذا كانت الحقول كثيرة */
+}
+
+/* تصميم قسم رفع الصورة الاحترافي */
+.image-uploader {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1; /* يجعل العنصر مربعاً دائماً */
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 2px dashed var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-uploader img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* تضمن ملء الصورة للمساحة دون تشويه */
+    transition: transform 0.3s ease;
+}
+
+.image-uploader:hover img {
+    transform: scale(1.05);
+}
+
+.image-uploader .upload-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+}
+
+.image-uploader:hover .upload-overlay {
+    opacity: 1;
+}
+
+.upload-overlay i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+/* تحسينات على الحقول داخل التصميم الجديد */
+.split-form .form-group label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.split-form .form-group input,
+.split-form .form-group select {
+    padding: 0.9rem;
+}
+
+.split-form .form-actions {
+    margin-top: auto; /* يدفع زر الإضافة لأسفل القسم */
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* تصميم متجاوب للتصميم المنقسم */
+@media (max-width: 900px) {
+    .split-form {
+        grid-template-columns: 1fr; /* تحويله إلى عمود واحد في الشاشات الصغيرة */
+    }
+
+    .form-left-panel {
+        order: 1; /* القسم الأيسر يأتي أولاً */
+        border-left: none;
+        border-bottom: 1px solid var(--border-color); /* إضافة خط فاصل سفلي بدلاً من الجانبي */
+    }
+
+    .form-right-panel {
+        order: 2; /* القسم الأيمن يأتي ثانياً */
+    }
+
+    .image-uploader {
+        max-width: 250px; /* تصغير حجم الصورة قليلاً في الشاشات الصغيرة */
+        margin: 0 auto;
+    }
+}
+
+
+/* ===================================================================== */
+/* ===   KURD DOWN - Admin Panel Stylesheet - V-FINAL (Responsive Fix)   === */
+/* ===================================================================== */
+
+:root {
+    --primary-color: #6366f1;
+    --bg-primary: #111827;
+    --bg-secondary: #1f2937;
+    --bg-card: #374151;
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --border-color: #4b5563;
+    --radius-xl: 1rem;
+    --radius-lg: 0.75rem;
+    --radius-md: 0.5rem;
+    --blue: #3b82f6;
+    --green: #10b981;
+    --red: #ef4444;
+}
+
+.admin-body { color: var(--text-primary); background: var(--bg-primary); font-family: 'Cairo', sans-serif; margin: 0; overflow-x: hidden; } /* ==> إصلاح التمرير الأفقي */
+body.modal-active { overflow: hidden; }
+
+/* --- تصميم لوحة التحكم العام --- */
+.admin-dashboard { display: grid; grid-template-columns: 260px 1fr; grid-template-rows: 65px 1fr; grid-template-areas: "sidebar header" "sidebar main"; min-height: 100vh; }
+.admin-dashboard.hidden { display: none; }
+.admin-header { grid-area: header; background: var(--bg-secondary); padding: 0 2rem; display: flex; justify-content: flex-end; align-items: center; border-bottom: 1px solid var(--border-color); }
+.admin-sidebar { grid-area: sidebar; background: var(--bg-secondary); border-left: 1px solid var(--border-color); padding: 1rem; display: flex; flex-direction: column; }
+.admin-logo { font-size: 1.5rem; font-weight: 700; text-align: center; padding: 1rem 0; margin-bottom: 1rem; }
+.logout-btn { background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-primary); cursor: pointer; padding: 0.5rem 1rem; border-radius: var(--radius-md); font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+.admin-nav .nav-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.admin-nav .nav-link { display: flex; align-items: center; gap: 1rem; padding: 0.8rem 1rem; color: var(--text-secondary); text-decoration: none; border-radius: var(--radius-md); font-weight: 600; }
+.admin-nav .nav-link.active { background: var(--primary-color); color: white; }
+.admin-main { grid-area: main; padding: 2.5rem; overflow-y: auto; }
+.admin-section { display: none; }
+.admin-section.active { display: block; animation: fadeIn 0.5s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.mobile-menu-toggle, .close-sidebar-btn, .mobile-bottom-nav { display: none; }
+.header-brand-logo { display: none; }
+
+/* البطاقات والجداول واللوحة الرئيسية */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
+.stat-card { background: var(--bg-secondary); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; align-items: center; gap: 1.5rem; }
+.stat-icon { font-size: 1.5rem; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; }
+.stat-card.blue .stat-icon { background: var(--blue); } .stat-card.green .stat-icon { background: var(--green); }
+.stat-details .stat-title { color: var(--text-secondary); font-weight: 600; }
+.stat-details .stat-number { color: var(--text-primary); font-size: 2rem; font-weight: 700; }
+.dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-top: 2rem; }
+.chart-container { background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--radius-lg); }
+.chart-container canvas { max-height: 350px; }
+.recent-programs { background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--radius-lg); }
+#recentProgramsList { list-style: none; padding: 0; }
+#recentProgramsList li { display: flex; align-items: center; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border-color); }
+#recentProgramsList li:last-child { border-bottom: none; }
+#recentProgramsList img { width: 40px; height: 40px; border-radius: var(--radius-md); object-fit: cover; }
+.programs-table-container { overflow-x: auto; background: var(--bg-secondary); border-radius: var(--radius-lg); border: 1px solid var(--border-color); margin-top: 1.5rem; }
+.programs-table { width: 100%; border-collapse: collapse; }
+.programs-table th, .programs-table td { padding: 1rem 1.5rem; text-align: right; border-bottom: 1px solid var(--border-color); white-space: nowrap; vertical-align: middle; }
+.programs-table thead { background: #374151; }
+.programs-table img { width: 45px; height: 45px; border-radius: var(--radius-md); object-fit: cover; }
+.action-btn { border: none; padding: 0.5rem 0.8rem; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; margin-left: 5px; }
+.action-btn.edit { background-color: var(--blue); color: white; }
+.action-btn.delete { background-color: var(--red); color: white; }
+.platform-badge { font-size: 0.8rem; padding: 4px 8px; border-radius: 6px; color: white; display: inline-block; }
+.platform-badge.android, .platform-badge.games { background-color: var(--green); }
+.platform-badge.ios, .platform-badge.software { background-color: var(--blue); }
+.text-center { text-align: center; }
+
+/* الفلاتر والبحث */
+.program-filters, .add-new-container { margin-bottom: 1.5rem; }
+.program-filters { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+.search-container { position: relative; flex-grow: 1; min-width: 250px; }
+.search-container input { width: 100%; padding: 0.8rem 1rem 0.8rem 3rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); }
+.search-container i { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary); }
+.main-filters { display: flex; gap: 0.5rem; }
+.filter-btn { background-color: var(--bg-card); color: var(--text-secondary); border: 1px solid var(--border-color); padding: 0.6rem 1.2rem; border-radius: var(--radius-md); cursor: pointer; }
+.filter-btn.active, .filter-btn:hover { background-color: var(--primary-color); color: white; border-color: var(--primary-color); }
+.add-new-btn { width: 100%; padding: 1.2rem; background: var(--bg-secondary); border: 2px dashed var(--border-color); color: var(--text-secondary); font-size: 1.1rem; border-radius: var(--radius-lg); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 1rem; }
+
+/* فورم الإضافة القياسي */
+.add-program-form { background: var(--bg-secondary); border-radius: var(--radius-lg); padding: 2rem; border: 1px solid var(--border-color); }
+.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+.form-group { display: flex; flex-direction: column; }
+.form-group label { margin-bottom: 0.75rem; font-weight: 600; font-size: 0.9rem; color: var(--text-secondary); }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.8rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--radius-md); color: var(--text-primary); box-sizing: border-box; }
+.checkbox-label { flex-direction: row; align-items: center; gap: 10px; cursor: pointer; margin-top: 1rem; }
+.checkbox-label input[type="checkbox"] { width: auto; }
+.form-actions { display: flex; justify-content: flex-end; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
+.btn-primary { background: var(--primary-color); color: white; border: none; padding: 0.9rem 2rem; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; }
+.btn-primary:disabled { background: var(--bg-card); cursor: not-allowed; }
+
+/* النافذة المنبثقة (Modal) بالتصميم المنقسم */
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(17, 24, 39, 0.8); backdrop-filter: blur(8px); align-items: center; justify-content: center; z-index: 1000; padding: 2rem; }
+.modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+.modal-content { background: var(--bg-secondary); border-radius: var(--radius-xl); width: 100%; max-width: 900px; border: 1px solid var(--border-color); animation: scaleIn 0.3s ease; max-height: 90vh; display: flex; flex-direction: column; }
+@keyframes scaleIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.modal-header { padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); flex-shrink: 0; }
+.modal-close-btn { background: none; border: none; font-size: 1.5rem; color: var(--text-secondary); cursor: pointer; }
+.split-form { display: grid; grid-template-columns: 300px 1fr; overflow: hidden; }
+.form-left-panel { background-color: var(--bg-primary); padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem; border-left: 1px solid var(--border-color); }
+.form-right-panel { padding: 2rem; display: flex; flex-direction: column; gap: 1rem; overflow-y: auto; }
+.image-uploader { position: relative; width: 100%; aspect-ratio: 1 / 1; background-color: var(--bg-secondary); border-radius: var(--radius-lg); overflow: hidden; border: 2px dashed var(--border-color); display: flex; align-items: center; justify-content: center; }
+.image-uploader img { width: 100%; height: 100%; object-fit: cover; }
+.image-uploader .upload-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; cursor: pointer; }
+.image-uploader:hover .upload-overlay { opacity: 1; }
+.upload-overlay i { font-size: 2rem; margin-bottom: 0.5rem; }
+.file-input { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.6rem; color: var(--text-secondary); cursor: pointer; }
+#uploadProgressContainer { width: 100%; margin-top: 0.5rem; display: none; }
+.progress-wrapper { position: relative; display: flex; align-items: center; }
+.progress-wrapper progress { width: 100%; height: 20px; border-radius: 10px; overflow: hidden; border: 1px solid var(--border-color); }
+.cancel-upload-btn { position: absolute; left: 8px; background-color: var(--red); color: white; border: none; width: 16px; height: 16px; border-radius: 50%; cursor: pointer; font-size: 12px; line-height: 16px; text-align: center; padding: 0; }
+.progress-text { display: block; text-align: center; margin-top: 0.5rem; font-size: 0.9rem; }
+
+/* ====> التصميم المتجاوب للموبايل <==== */
+@media (max-width: 992px) {
+    .admin-dashboard { grid-template-columns: 1fr; grid-template-rows: 60px 1fr; grid-template-areas: "header" "main"; padding-bottom: 60px; }
+    .admin-header { padding: 0 1rem; justify-content: space-between; }
+    .mobile-menu-toggle { display: block; background: none; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer; }
+    .header-brand-logo { display: block; font-size: 1.2rem; font-weight: 700; }
+    .admin-profile .logout-btn span { display: none; }
+    .admin-sidebar { position: fixed; top: 0; right: -300px; width: 280px; height: 100%; z-index: 2000; transition: right 0.3s ease-in-out; box-shadow: -5px 0 15px rgba(0,0,0,0.2); }
+    .admin-sidebar.open { right: 0; }
+    .sidebar-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
+    .close-sidebar-btn { display: block; background: none; border: none; font-size: 1.8rem; color: var(--text-secondary); cursor: pointer; }
+    .mobile-bottom-nav { display: grid; grid-template-columns: repeat(4, 1fr); position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: var(--bg-secondary); border-top: 1px solid var(--border-color); z-index: 1000; }
+    .mobile-bottom-nav .nav-link { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4px; font-size: 0.7rem; padding: 0; color: var(--text-secondary); text-decoration: none;}
+    .mobile-bottom-nav .nav-link i { font-size: 1.3rem; width: auto; }
+    .mobile-bottom-nav .nav-link.active { color: var(--primary-color); }
+    .admin-main { padding: 1.5rem; }
+    .dashboard-grid { grid-template-columns: 1fr; }
+    .modal-content.modal-lg { max-width: 100%; margin: 0; border-radius: 0; height: 100%; max-height: 100%; }
+    .split-form { grid-template-columns: 1fr; max-height: calc(100vh - 60px); }
+    .form-left-panel { order: 1; border-left: none; border-bottom: 1px solid var(--border-color); }
+    .form-right-panel { order: 2; }
+    .image-uploader { max-width: 200px; margin: 0 auto; }
+}
